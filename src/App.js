@@ -1,26 +1,65 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { Component } from "react";
+import { navigate } from "@reach/router";
+import { Router } from "@reach/router";
+import Header from "./components/Header";
+import Navbar from "./components/Navbar";
+import Users from "./components/Users";
+import Topics from "./components/Topics";
+import Articles from "./components/Articles";
+import Article from "./components/Article";
+// import NewArticleForm from "./components/NewArticleForm";
+import ShowError from "./components/ShowError";
+import Home from "./components/Home";
+import Admin from "./components/Admin";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    loggedinuser: null
+  };
+  componentDidMount() {
+    const storedState = localStorage.getItem("storedState");
+    if (storedState) {
+      this.setState(JSON.parse(storedState));
+    }
+  }
+  componentDidUpdate() {
+    this.saveData();
+  }
+  saveData = () => {
+    localStorage.setItem("storedState", JSON.stringify(this.state));
+  };
+  render() {
+    return (
+      <div id="page-container">
+        <Header
+          loginUser={this.loginUser}
+          loggedinuser={this.state.loggedinuser}
+          logoutUser={this.logoutUser}
+        />
+        <Navbar />
+        <Router>
+          <Home path="/" loggedinuser={this.state.loggedinuser} />
+          <Articles loggedinuser={this.state.loggedinuser} path="/articles" />
+          <Article
+            path="/articles/:article_id"
+            loggedinuser={this.state.loggedinuser}
+          />
+          <Topics loggedinuser={this.state.loggedinuser} path="/topics" />
+          <Users loggedinuser={this.state.loggedinuser} path="/users" />
+          <Admin path="/myadmin" />
+          <ShowError default path="/error" />
+        </Router>
+      </div>
+    );
+  }
+  loginUser = username => {
+    this.setState({ loggedinuser: username });
+  };
+  logoutUser = () => {
+    this.setState({ loggedinuser: null });
+    navigate("/");
+  };
 }
 
 export default App;
