@@ -40,7 +40,6 @@ export const deleteAUser = user => {
     });
 };
 export const getArticles = query => {
-  console.log(query, "in api");
   return axios.get(`${url}/articles`, { params: query }).then(data => {
     return data;
   });
@@ -127,19 +126,11 @@ export const addAComment = (username, body, id) => {
     });
 };
 
-export const formatDate = date => {
-  const newDate = new Date(date).toString();
-  const back = newDate.slice(0, 15);
-  const front = newDate.slice(16, 25);
-  return front + " on " + back;
-};
-
 export const deleteAComment = commment_id => {
   return axios.delete(`${url}/comments/${commment_id}`).then(res => {});
 };
 
 export const deleteAnArticle = article_id => {
-  console.log(article_id, "articleid in api");
   return axios.delete(`${url}/articles/${article_id}`).then(res => {
     console.log(res);
   });

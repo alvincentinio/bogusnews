@@ -14,9 +14,7 @@ class CommentsList extends Component {
       this.setState({ comments });
     });
   }
-  componentDidUpdate() {
-    console.log("CommentsList Did Update");
-  }
+
   render() {
     const { loggedinuser, article_id } = this.props;
     const { comments } = this.state;
@@ -36,6 +34,7 @@ class CommentsList extends Component {
                   comment={comment}
                   commentBeenDeleted={this.commentBeenDeleted}
                   loggedinuser={loggedinuser}
+                  refreshCommentCount={this.props.refreshCommentCount}
                 />
               </li>
             );

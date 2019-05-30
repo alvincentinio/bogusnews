@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getUsers } from "../api";
+import loader from "../images/loader.gif";
 import NewUserForm from "./NewUserForm";
 import UsersList from "./UsersList";
 
@@ -12,7 +13,6 @@ class Users extends Component {
   };
 
   componentDidMount() {
-    console.log("users page mounted");
     getUsers().then(users => {
       this.setState({ users, loading: false });
     });
@@ -20,7 +20,7 @@ class Users extends Component {
   render() {
     const { users, loading, defaultAvatarUrl } = this.state;
     return loading ? (
-      <p>Loading...</p>
+      <img alt="" src={loader} width="40px" />
     ) : (
       <div>
         <NewUserForm

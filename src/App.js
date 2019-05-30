@@ -6,12 +6,13 @@ import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import Users from "./components/Users";
 import Topics from "./components/Topics";
+import TopicArticleList from "./components/TopicArticleList";
 import Articles from "./components/Articles";
 import Article from "./components/Article";
-// import NewArticleForm from "./components/NewArticleForm";
 import ShowError from "./components/ShowError";
 import Home from "./components/Home";
 import Admin from "./components/Admin";
+import UsersArticles from "./components/UsersArticles";
 
 class App extends Component {
   state = {
@@ -46,7 +47,12 @@ class App extends Component {
             loggedinuser={this.state.loggedinuser}
           />
           <Topics loggedinuser={this.state.loggedinuser} path="/topics" />
+          <TopicArticleList
+            loggedinuser={this.state.loggedinuser}
+            path="/topics/:topic"
+          />
           <Users loggedinuser={this.state.loggedinuser} path="/users" />
+          <UsersArticles path="/users/:username/articles" />
           <Admin path="/myadmin" />
           <ShowError default path="/error" />
         </Router>

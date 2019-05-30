@@ -11,22 +11,15 @@ class NewArticleForm extends Component {
     loading: true
   };
   componentDidMount() {
-    console.log("new article form mounted");
     getTopics().then(topics => {
       this.setState({ availableTopics: topics, loading: false });
     });
   }
 
-  componentDidUpdate() {
-    console.log("new article form updated");
-  }
-
   render() {
-    console.log("new article form rendered");
     return this.props.loggedinuser ? (
       <div id="centred">
         <form id="newArticleForm" onSubmit={this.handleSubmit}>
-          <h5>Submit New Article</h5>
           {this.populateTopicSelect()}
           <input
             className="input-box"
@@ -43,6 +36,9 @@ class NewArticleForm extends Component {
           />
           <br />
           <button className="button">Submit Article</button>
+          <button className="button" onClick={this.props.hideForm}>
+            Close
+          </button>
         </form>
       </div>
     ) : (
@@ -50,7 +46,6 @@ class NewArticleForm extends Component {
     );
   }
   handleChange = event => {
-    console.log(event.target.value);
     this.setState({ [event.target.id]: event.target.value });
   };
 
@@ -71,7 +66,7 @@ class NewArticleForm extends Component {
     ) : (
       <select className="input-box" onChange={this.handleChange} id="topic">
         <option value="none" defaultValue>
-          Choose topic
+          Choose Topic
         </option>
         {availableTopics.map((topic, index) => (
           <option key={index} value={topic.slug}>

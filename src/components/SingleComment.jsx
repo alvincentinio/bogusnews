@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import { patchCommentVotes, formatDate, deleteAComment } from "../api";
+import { patchCommentVotes, deleteAComment } from "../api";
+import { formatDate } from "../utils/formatData";
 
 class SingleComment extends Component {
   state = {
     commentVotes: 0,
     commentDeleted: false
   };
-  componentDidUpdate() {
-    console.log("single comment did update");
-  }
+
   render() {
     const { comment, loggedinuser } = this.props;
     const { commentVotes } = this.state;
@@ -62,8 +61,10 @@ class SingleComment extends Component {
     });
   };
   handleDeleteComment = (event, comment_id) => {
+    const { refreshCommentCount } = this.props;
     deleteAComment(event.target.id, comment_id).then(res => {
       this.setState({ commentDeleted: true });
+      refreshCommentCount();
     });
   };
 }

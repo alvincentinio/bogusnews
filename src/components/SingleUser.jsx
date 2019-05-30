@@ -1,6 +1,12 @@
 import React, { Component } from "react";
+// import { getArticles } from "../api";
+import { Link } from "@reach/router";
 
 class SingleUser extends Component {
+  state = {
+    articles: null,
+    total_count: 0
+  };
   render() {
     const { user, defaultAvatarUrl } = this.props;
     return (
@@ -20,10 +26,25 @@ class SingleUser extends Component {
         <br />
         username: {user.username}
         <br />
-        <button className="button">View {user.username}'s xxx articles</button>
+        <button className="button">
+          <Link to={`/users/${user.username}/articles/`}>
+            View {user.username}'s articles
+          </Link>
+        </button>
       </div>
     );
   }
+
+  handleSubmit = event => {};
+  // handleSubmit = event => {
+  //   const author = this.props.user.username;
+  //   getArticles({ author }).then(({ data }) => {
+  //     this.setState({
+  //       articles: data.articles,
+  //       total_count: data.total_count
+  //     });
+  //   });
+  // };
 }
 
 export default SingleUser;

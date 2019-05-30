@@ -6,13 +6,6 @@ class NewCommentForm extends Component {
   state = {
     bodyInput: ""
   };
-  componentDidMount() {
-    console.log("new comment form mounted");
-  }
-
-  componentDidUpdate() {
-    console.log("new comment form updated");
-  }
 
   render() {
     return this.props.loggedinuser ? (
@@ -25,6 +18,7 @@ class NewCommentForm extends Component {
           placeholder="comment"
           required={true}
           onChange={this.handleInput}
+          value={this.state.bodyInput}
         />
         <br />
         <button className="button" id="submit">
@@ -49,6 +43,7 @@ class NewCommentForm extends Component {
     } = this.props;
     const { bodyInput } = this.state;
     addAComment(loggedinuser.username, bodyInput, article_id).then(comment => {
+      this.setState({ bodyInput: "" });
       refreshComments(comment);
       refreshCommentCount();
     });

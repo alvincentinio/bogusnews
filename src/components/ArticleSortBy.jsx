@@ -9,8 +9,7 @@ class ArticleSortBy extends Component {
     return (
       <div className="sortBy">
         <form onSubmit={this.handleSubmit}>
-          <h5>Sort Articles By</h5>
-
+          Sort By
           <select className="button" onChange={this.handleChange} id="sort_by">
             <option value="created_at">Date Created</option>
             <option value="comment_count">No. Of Comments</option>

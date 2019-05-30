@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-import {
-  getArticle,
-  patchArticleVotes,
-  formatDate,
-  deleteAnArticle
-} from "../api";
+import { getArticle, patchArticleVotes, deleteAnArticle } from "../api";
+import { formatDate } from "../utils/formatData";
 import CommentsList from "./CommentsList";
 import { navigate } from "@reach/router";
 import ShowError from "./ShowError";
@@ -20,7 +16,6 @@ class Article extends Component {
   };
 
   componentDidMount() {
-    console.log("single article mounted");
     getArticle(this.props.article_id)
       .then(article => {
         this.setState({ article, loading: false, commentsUpdated: false });
@@ -41,7 +36,6 @@ class Article extends Component {
       });
   }
   componentDidUpdate() {
-    console.log("single article updated");
     if (this.state.commentsUpdated === true) {
       getArticle(this.props.article_id).then(article => {
         this.setState({ article, commentsUpdated: false });
@@ -113,7 +107,6 @@ class Article extends Component {
     const { article_id } = this.props;
     if (window.confirm("Delete Article & All It's Comments?")) {
       deleteAnArticle(article_id).then(res => {
-        console.log("deleted article in article");
         navigate("/articles", { state: { deletedArticle: true } });
       });
     }

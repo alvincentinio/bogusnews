@@ -10,13 +10,15 @@ class NewTopicForm extends Component {
     return this.props.loggedinuser ? (
       <div>
         <form id="addTopicForm">
-          Create New Topic:<br />
+          Create New Topic:
+          <br />
           <input
             className="input-box"
             id="slugInput"
             type="text"
             placeholder="enter topic"
             onChange={this.handleInput}
+            value={this.state.slugInput}
           />
           <input
             className="input-box"
@@ -24,6 +26,7 @@ class NewTopicForm extends Component {
             type="text"
             placeholder="enter topic description"
             onChange={this.handleInput}
+            value={this.state.descriptionInput}
           />
           <button className="button" onClick={this.handleSubmit} id="submit">
             Submit
@@ -44,6 +47,7 @@ class NewTopicForm extends Component {
     const { slugInput, descriptionInput } = this.state;
     addATopic(slugInput, descriptionInput).then(topic => {
       refreshTopics(topic);
+      this.setState({ slugInput: "", descriptionInput: "" });
     });
   };
 }

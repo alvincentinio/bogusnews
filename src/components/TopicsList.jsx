@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { getArticles } from "../api";
 import TopicArticleList from "./ArticleList";
+// import { navigate } from "@reach/router";
 
 class TopicsList extends Component {
   state = {
@@ -18,7 +19,7 @@ class TopicsList extends Component {
         <p>no articles in this topic yet!</p>
       ) : (
         <div>
-          <p>{this.state.articles[0].topic} articles</p>
+          <h3>{this.state.articles[0].topic} Articles</h3>
           <TopicArticleList
             articles={this.state.articles}
             loggedinuser={this.props.loggedinuser}
@@ -32,13 +33,11 @@ class TopicsList extends Component {
         {topics.map(topic => {
           return (
             <li className="card" key={topic.slug}>
-              <p>
-                Topic: {topic.slug}
-                <br />
-                Description: {topic.description}
-              </p>
+              <h2>{topic.slug}</h2>
+              <p>Description: {topic.description}</p>
+
               <button
-                className="button topicbutton"
+                className="button"
                 onClick={this.handleSubmit}
                 id={topic.slug}
               >
@@ -58,6 +57,8 @@ class TopicsList extends Component {
         topic,
         total_count: data.total_count
       });
+      console.log("got articles");
+      // navigate(`/topics/${topic}`);
     });
   };
   handleSort = (sort_by, order) => {

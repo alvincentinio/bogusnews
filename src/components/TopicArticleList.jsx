@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "@reach/router";
-import { formatDate } from "../api";
+import { formatDate } from "../utils/formatData";
 import ArticleSortBy from "./ArticleSortBy";
 
 const TopicArticleList = ({ articles, loggedinuser, handleSort }) => {
-  console.log("article list rerendered as well");
   return (
     <div>
       <ArticleSortBy handleSort={handleSort} />

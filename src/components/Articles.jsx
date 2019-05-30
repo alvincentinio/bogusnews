@@ -1,5 +1,6 @@
 import React from "react";
 import { getArticles } from "../api";
+import loader from "../images/loader.gif";
 import ArticleList from "./ArticleList";
 import NewArticleForm from "./NewArticleForm";
 
@@ -11,7 +12,8 @@ class Articles extends React.Component {
     authorsArticlesShowing: false,
     author: null,
     p: 1,
-    total_count: 0
+    total_count: 0,
+    showArticleForm: false
   };
   componentDidMount() {
     const { p } = this.state;
@@ -20,8 +22,8 @@ class Articles extends React.Component {
         this.setState({
           articles: data.articles,
           loading: false,
-          total_count: data.total_count
-          // authorArticlesShowing: false
+          total_count: data.total_count,
+          authorArticlesShowing: false
         });
       })
       .catch(err => {
@@ -34,22 +36,11 @@ class Articles extends React.Component {
     }
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log("articles page updated");
-  //   if (
-  //     this.state.authorsArticlesShowing &&
-  //     this.prevState.authorArticlesShowing !== this.state.authorsArticlesShowing
-  //   ) {
-  //     this.getAuthorsArticles();
-  //   }
-  // }
-
   render() {
-    console.log("articles page rendered");
     const { articles, loading, p } = this.state;
     const { state: locationState } = this.props.location;
     return loading ? (
-      <p>Loading...</p>
+      <img alt="" src={loader} width="40px" />
     ) : (
       <div>
         {locationState && locationState.deletedArticle && (
@@ -57,10 +48,19 @@ class Articles extends React.Component {
         )}
         {this.props.loggedinuser && (
           <button className="button" onClick={this.getAuthorsArticles}>
-            See Your Articles
+            View Your Articles
           </button>
         )}
-        <NewArticleForm loggedinuser={this.props.loggedinuser} />
+        {this.state.showArticleForm ? (
+          <NewArticleForm
+            loggedinuser={this.props.loggedinuser}
+            hideForm={this.hideForm}
+          />
+        ) : (
+          <button className="button" onClick={this.displayForm}>
+            Submit New Article
+          </button>
+        )}
         <ArticleList
           loggedinuser={this.props.loggedinuser}
           articles={articles}
@@ -96,6 +96,14 @@ class Articles extends React.Component {
   //     authorArticlesShowing: !this.state.authorArticlesShowing
   //   });
   // };
+  displayForm = event => {
+    event.preventDefault();
+    this.setState({ showArticleForm: true });
+  };
+  hideForm = event => {
+    event.preventDefault();
+    this.setState({ showArticleForm: false });
+  };
 
   getAuthorsArticles = props => {
     if (this.props.loggedinuser) {
@@ -134,9 +142,7 @@ class Articles extends React.Component {
       sort_by: sort_by,
       order: order
     };
-    console.log(query);
     getArticles(query).then(({ data }) => {
-      console.log(data.articles, "got articles by query in articles");
       this.setState({
         articles: data.articles,
         loading: false,

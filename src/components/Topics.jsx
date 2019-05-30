@@ -1,5 +1,6 @@
 import React from "react";
 import { getTopics } from "../api";
+import loader from "../images/loader.gif";
 import TopicsList from "./TopicsList";
 import NewTopicForm from "./NewTopicForm";
 
@@ -17,7 +18,7 @@ class Topics extends React.Component {
   render() {
     const { topics, loading } = this.state;
     return loading ? (
-      <p>Loading...</p>
+      <img alt="" src={loader} width="40px" />
     ) : (
       <div>
         <NewTopicForm
