@@ -71,8 +71,7 @@ class Article extends Component {
           )}
         {confirmButtonsShowing && (
           <div>
-            Delete Your Article & All It's Comments?
-            <br />
+            <h5>Delete Your Article & All It's Comments?</h5>
             <button className="button" onClick={this.deleteArticle}>
               Yes
             </button>

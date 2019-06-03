@@ -7,7 +7,7 @@ import Navbar from "./components/Navbar";
 import ScrollToTop from "./components/ScrollToTop";
 import Users from "./components/Users";
 import Topics from "./components/Topics";
-import TopicArticleList from "./components/TopicArticleList";
+import TopicArticles from "./components/TopicArticles";
 import Articles from "./components/Articles";
 import Article from "./components/Article";
 import ShowError from "./components/ShowError";
@@ -32,30 +32,31 @@ class App extends Component {
     sessionStorage.setItem("storedState", JSON.stringify(this.state));
   };
   render() {
+    const { loggedinuser } = this.state;
     return (
       <div id="page-container">
         <Header
           loginUser={this.loginUser}
-          loggedinuser={this.state.loggedinuser}
+          loggedinuser={loggedinuser}
           logoutUser={this.logoutUser}
         />
         <Navbar />
         <Router primary={false}>
           <ScrollToTop path="/">
-            <Home path="/" loggedinuser={this.state.loggedinuser} />
-            <Articles loggedinuser={this.state.loggedinuser} path="/articles" />
-            <Article
-              path="/articles/:article_id"
-              loggedinuser={this.state.loggedinuser}
+            <Home path="/" loggedinuser={loggedinuser} />
+            <Articles loggedinuser={loggedinuser} path="/articles" />
+            <Article path="/articles/:article_id" loggedinuser={loggedinuser} />
+            <Topics loggedinuser={loggedinuser} path="/topics" />
+            <TopicArticles
+              loggedinuser={loggedinuser}
+              path="/topics/:topic/articles"
             />
-            <Topics loggedinuser={this.state.loggedinuser} path="/topics" />
-            <TopicArticleList
-              loggedinuser={this.state.loggedinuser}
-              path="/topics/:topic"
+            <Users loggedinuser={loggedinuser} path="/users" />
+            <UsersArticles
+              path="/users/:username/articles"
+              loggedinuser={loggedinuser}
             />
-            <Users loggedinuser={this.state.loggedinuser} path="/users" />
-            <UsersArticles path="/users/:username/articles" />
-            <Admin path="/myadmin" loggedinuser={this.state.loggedinuser} />
+            <Admin path="/myadmin" loggedinuser={loggedinuser} />
             <ShowError default path="/error" />
           </ScrollToTop>
         </Router>

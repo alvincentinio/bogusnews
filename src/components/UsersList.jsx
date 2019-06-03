@@ -1,13 +1,13 @@
 import React from "react";
 import SingleUser from "./SingleUser";
 
-const UsersList = ({ users, defaultAvatarUrl }) => {
+const UsersList = ({ users }) => {
   return (
     <ul className="cards">
       {users.map(user => {
         return (
           <li className="card" key={user.username}>
-            <SingleUser user={user} defaultAvatarUrl={defaultAvatarUrl} />
+            <SingleUser user={user} />
           </li>
         );
       })}

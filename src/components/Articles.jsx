@@ -6,10 +6,8 @@ import NewArticleForm from "./NewArticleForm";
 
 class Articles extends React.Component {
   state = {
-    articles: null,
+    articles: [],
     loading: true,
-    articlesSorted: false,
-    author: null,
     p: 1,
     total_count: 0,
     showArticleForm: false
@@ -21,8 +19,7 @@ class Articles extends React.Component {
         this.setState({
           articles: data.articles,
           loading: false,
-          total_count: data.total_count,
-          authorArticlesShowing: false
+          total_count: data.total_count
         });
       })
       .catch(err => {
@@ -36,7 +33,7 @@ class Articles extends React.Component {
   }
 
   render() {
-    const { articles, loading, p } = this.state;
+    const { articles, loading, p, showArticleForm, total_count } = this.state;
     const { state: locationState } = this.props.location;
     return loading ? (
       <img alt="" src={loader} width="40px" />
@@ -45,12 +42,7 @@ class Articles extends React.Component {
         {locationState && locationState.deletedArticle && (
           <p>Article Deleted</p>
         )}
-        {/* {this.props.loggedinuser && (
-          <button className="button" onClick={this.getAuthorsArticles}>
-            View Your Articles
-          </button>
-        )} */}
-        {this.state.showArticleForm ? (
+        {showArticleForm ? (
           <NewArticleForm
             loggedinuser={this.props.loggedinuser}
             hideForm={this.hideForm}
@@ -66,7 +58,7 @@ class Articles extends React.Component {
           handleSort={this.handleSort}
         />
         <h5>
-          Page {this.state.p} of {Math.ceil(this.state.total_count / 10)}
+          Page {this.state.p} of {Math.ceil(total_count / 10)}
         </h5>
         <button
           className="button"
@@ -77,7 +69,7 @@ class Articles extends React.Component {
         </button>
         <button
           className="button"
-          disabled={p === Math.ceil(this.state.total_count / 10)}
+          disabled={p === Math.ceil(total_count / 10)}
           onClick={() => this.changePage(1)}
         >
           Next Page
@@ -92,20 +84,6 @@ class Articles extends React.Component {
   hideForm = event => {
     event.preventDefault();
     this.setState({ showArticleForm: false });
-  };
-
-  getAuthorsArticles = props => {
-    if (this.props.loggedinuser) {
-      const author = this.props.loggedinuser.username;
-      getArticles({ author }).then(({ data }) => {
-        this.setState({
-          articles: data.articles,
-          loading: false,
-          total_count: data.total_count,
-          p: 1
-        });
-      });
-    }
   };
 
   fetchArticles = () => {
@@ -134,7 +112,6 @@ class Articles extends React.Component {
       this.setState({
         articles: data.articles,
         loading: false,
-        articlesSorted: true,
         total_count: data.total_count
       });
     });

@@ -18,13 +18,14 @@ class Topics extends React.Component {
 
   render() {
     const { topics, loading } = this.state;
+    const { loggedinuser } = this.props;
     return loading ? (
       <img alt="" src={loader} width="40px" />
     ) : (
       <div>
         {this.state.showTopicForm ? (
           <NewTopicForm
-            loggedinuser={this.props.loggedinuser}
+            loggedinuser={loggedinuser}
             refreshTopics={this.refreshTopics}
             hideForm={this.toggleForm}
           />
@@ -33,7 +34,7 @@ class Topics extends React.Component {
             Add New Topic
           </button>
         )}
-        <TopicsList topics={topics} loggedinuser={this.props.loggedinuser} />
+        <TopicsList topics={topics} loggedinuser={loggedinuser} />
       </div>
     );
   }

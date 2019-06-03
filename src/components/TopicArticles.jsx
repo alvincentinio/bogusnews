@@ -3,7 +3,7 @@ import { getArticles } from "../api";
 import loader from "../images/loader.gif";
 import ArticleList from "./ArticleList";
 
-class UsersArticles extends Component {
+class TopicArticles extends Component {
   state = {
     articles: null,
     loading: true,
@@ -11,8 +11,8 @@ class UsersArticles extends Component {
     p: 1
   };
   componentDidMount() {
-    const author = this.props.username;
-    getArticles({ author }).then(({ data }) => {
+    const { topic } = this.props;
+    getArticles({ topic }).then(({ data }) => {
       this.setState({
         articles: data.articles,
         loading: false,
@@ -27,7 +27,7 @@ class UsersArticles extends Component {
   }
   render() {
     const { articles, loading, p, total_count } = this.state;
-    const { username, loggedinuser } = this.props;
+    const { topic, loggedinuser } = this.props;
     return loading ? (
       <img alt="" src={loader} width="40px" />
     ) : (
@@ -35,13 +35,13 @@ class UsersArticles extends Component {
         {total_count ? (
           <div>
             <h4>
-              {username} has {total_count} articles
+              There are {total_count} {topic} articles
             </h4>
           </div>
         ) : loading ? (
           <img alt="" src={loader} width="40px" />
         ) : (
-          <h4>Sorry {username} hasn't written any articles yet</h4>
+          <h4>Sorry there are no articles in the {topic} topic yet</h4>
         )}
         <ArticleList
           loggedinuser={loggedinuser}
@@ -70,8 +70,8 @@ class UsersArticles extends Component {
   }
   fetchArticles = () => {
     const { p } = this.state;
-    const author = this.props.username;
-    getArticles({ p, author }).then(({ data }) => {
+    const { topic } = this.props;
+    getArticles({ p, topic }).then(({ data }) => {
       this.setState({
         articles: data.articles,
         total_count: data.total_count,
@@ -80,11 +80,11 @@ class UsersArticles extends Component {
     });
   };
   handleSort = (sort_by, order) => {
-    const author = this.props.username;
+    const { topic } = this.props;
     const query = {
       sort_by: sort_by,
       order: order,
-      author: author
+      topic: topic
     };
     getArticles(query).then(({ data }) => {
       this.setState({
@@ -101,4 +101,4 @@ class UsersArticles extends Component {
   };
 }
 
-export default UsersArticles;
+export default TopicArticles;

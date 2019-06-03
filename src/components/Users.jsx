@@ -8,8 +8,6 @@ class Users extends Component {
   state = {
     users: null,
     loading: true,
-    defaultAvatarUrl:
-      "https://i155.photobucket.com/albums/s313/alvincentinio/Avatars/default-avatar.png",
     showUserForm: false
   };
 
@@ -18,8 +16,9 @@ class Users extends Component {
       this.setState({ users, loading: false });
     });
   }
+
   render() {
-    const { users, loading, defaultAvatarUrl } = this.state;
+    const { users, loading } = this.state;
     return loading ? (
       <img alt="" src={loader} width="40px" />
     ) : (
@@ -35,7 +34,7 @@ class Users extends Component {
             Add New User
           </button>
         )}
-        <UsersList users={users} defaultAvatarUrl={defaultAvatarUrl} />
+        <UsersList users={users} />
       </div>
     );
   }
@@ -45,7 +44,6 @@ class Users extends Component {
     this.setState({ showUserForm: true });
   };
   hideForm = event => {
-    console.log("hiding users form");
     event.preventDefault();
     this.setState({ showUserForm: false });
   };

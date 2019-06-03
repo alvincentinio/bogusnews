@@ -24,7 +24,12 @@ class CommentsList extends Component {
   }
 
   render() {
-    const { loggedinuser, article_id } = this.props;
+    const {
+      loggedinuser,
+      article_id,
+      commentCount,
+      refreshCommentCount
+    } = this.props;
     const { comments, p } = this.state;
     return (
       <div>
@@ -32,7 +37,7 @@ class CommentsList extends Component {
           loggedinuser={loggedinuser}
           article_id={article_id}
           refreshComments={this.refreshComments}
-          refreshCommentCount={this.props.refreshCommentCount}
+          refreshCommentCount={refreshCommentCount}
         />
         <ul>
           {comments.map(comment => {
@@ -42,17 +47,14 @@ class CommentsList extends Component {
                   comment={comment}
                   commentBeenDeleted={this.commentBeenDeleted}
                   loggedinuser={loggedinuser}
-                  refreshCommentCount={this.props.refreshCommentCount}
+                  refreshCommentCount={refreshCommentCount}
                 />
               </li>
             );
           })}
         </ul>
         <h5>
-          Page {this.state.p} of{" "}
-          {this.props.commentCount < 10
-            ? 1
-            : Math.ceil(this.props.commentCount / 10)}
+          Page {p} of {commentCount < 10 ? 1 : Math.ceil(commentCount / 10)}
         </h5>
         <button
           className="button"
@@ -63,10 +65,7 @@ class CommentsList extends Component {
         </button>
         <button
           className="button"
-          disabled={
-            this.props.commentCount < 10 ||
-            p === Math.ceil(this.props.commentCount / 10)
-          }
+          disabled={commentCount < 10 || p === Math.ceil(commentCount / 10)}
           onClick={() => this.changePage(1)}
         >
           Next Page
