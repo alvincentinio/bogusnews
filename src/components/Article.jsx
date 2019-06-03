@@ -12,7 +12,8 @@ class Article extends Component {
     errorStatus: null,
     errorMsg: null,
     commentsUpdated: false,
-    loading: true
+    loading: true,
+    confirmButtonsShowing: false
   };
 
   componentDidMount() {
@@ -49,7 +50,8 @@ class Article extends Component {
       articleVotes,
       loading,
       errorMsg,
-      errorStatus
+      errorStatus,
+      confirmButtonsShowing
     } = this.state;
     const { loggedinuser } = this.props;
     const { state: locationState } = this.props.location;
@@ -60,10 +62,24 @@ class Article extends Component {
       <div>
         {locationState && locationState.new && <p>Your newly posted article</p>}
         <h2>{article.title}</h2>
-        {loggedinuser && loggedinuser.username === article.author && (
-          <button className="redbutton" onClick={this.deleteArticle}>
-            Delete Your Article
-          </button>
+        {loggedinuser &&
+          loggedinuser.username === article.author &&
+          !confirmButtonsShowing && (
+            <button className="redbutton" onClick={this.toggleConfirm}>
+              Delete Your Article
+            </button>
+          )}
+        {confirmButtonsShowing && (
+          <div>
+            Delete Your Article & All It's Comments?
+            <br />
+            <button className="button" onClick={this.deleteArticle}>
+              Yes
+            </button>
+            <button className="redbutton" onClick={this.toggleConfirm}>
+              No
+            </button>
+          </div>
         )}
         <h4>Topic: {article.topic}</h4>
         <h5>Author: {article.author}</h5>
@@ -87,6 +103,7 @@ class Article extends Component {
         <h6>Number Of Comments: {article.comment_count}</h6>
         <CommentsList
           article_id={article.article_id}
+          commentCount={article.comment_count}
           loggedinuser={loggedinuser}
           refreshCommentCount={this.refreshCommentCount}
         />
@@ -102,73 +119,24 @@ class Article extends Component {
       };
     });
   };
+  toggleConfirm = event => {
+    const { confirmButtonsShowing } = this.state;
+    event.preventDefault();
+    this.setState({ confirmButtonsShowing: !confirmButtonsShowing });
+  };
+
   deleteArticle = event => {
     event.preventDefault();
     const { article_id } = this.props;
-    if (window.confirm("Delete Article & All It's Comments?")) {
-      deleteAnArticle(article_id).then(res => {
-        navigate("/articles", { state: { deletedArticle: true } });
-      });
-    }
+    deleteAnArticle(article_id).then(res => {
+      navigate("/articles", { state: { deletedArticle: true } });
+    });
   };
   refreshCommentCount = () => {
     this.setState({ commentsUpdated: true });
   };
 }
 export default Article;
-
-// {
-//   loggedinuser ? (
-//     <div>
-//       <button
-//         disabled={articleVotes === 1}
-//         onClick={() => this.handleArticleVote(1)}
-//       >
-//         Like
-//             </button>
-//       <button
-//         disabled={articleVotes === -1}
-//         onClick={() => this.handleArticleVote(-1)}
-//       >
-//         Hate
-//             </button>
-//       <h6>Number Of Comments: {article.comment_count}</h6>
-//       <CommentsList
-//         article_id={article.article_id}
-//         loggedinuser={loggedinuser}
-//         refreshCommentCount={this.refreshCommentCount}
-//       />
-//     </div>
-//   ) : (
-//       <p>Please Sign In To Vote & See Comments</p>
-//     )
-// }
-
-// function PageNumbers({ paginateArticles }) {
-//   return (
-//     <div>
-//       <button onClick={e => paginateArticles(1)} >1</button>
-//       <button onClick={e => paginateArticles(2)} >2</button>
-//       <button onClick={e => paginateArticles(3)} >3</button>
-//       <button onClick={e => paginateArticles(4)} >4</button>
-//     </div>
-//   )
-// };
-
-// export default PageNumbers;
-
-// paginateArticles = (pageNumber) => {
-//   getArticles(pageNumber)
-//     .then(articles => {
-//       this.setState({ articles });
-//     });
-// }
-
-/* <div>
-  <SortArticles sortArticles={this.sortArticles} />
-  {articles && <ArticleGrid articles={articles} />}
-  <PageNumbers paginateArticles={this.paginateArticles} />
-</div> */
 
 //errors
 // componentDidMount() {

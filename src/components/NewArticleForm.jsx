@@ -36,7 +36,7 @@ class NewArticleForm extends Component {
           />
           <br />
           <button className="button">Submit Article</button>
-          <button className="button" onClick={this.props.hideForm}>
+          <button className="button redbutton" onClick={this.props.hideForm}>
             Close
           </button>
         </form>

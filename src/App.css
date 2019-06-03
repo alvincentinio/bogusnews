@@ -9,9 +9,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
+/* * {
   box-sizing: border-box;
-}
+} */
 h1 {
   padding: 2px;
   margin: 6px 0px 6px 0px;
@@ -20,9 +20,9 @@ h1 {
 h5 {
   margin: 6px 10px;
 }
-body {
+/* body {
   margin: 0;
-}
+} */
 li {
   list-style: none;
   text-decoration: none !important;
@@ -32,9 +32,10 @@ a {
 }
 
 #page-container {
-  position: relative;
+  /* position: relative; */
   min-height: 100vh;
   text-align: center;
+  /* margin: 4px 10px 0px 10px; */
 }
 
 #header {
@@ -49,6 +50,7 @@ a {
 #topnav {
   overflow: hidden;
   background-color: #333;
+  font-size: 1em;
 }
 
 #topnav a {
@@ -70,18 +72,17 @@ a {
 }
 .input-box {
   font-size: 14px;
-  padding: 3px 4px;
+  padding: 2px 4px;
   width: 240px;
   margin: 2px;
   vertical-align: bottom;
 }
-select {
-  /* font: inherit; */
+.select-box {
   font-size: 14px;
-  padding: 2px 4px;
-  margin: 2px;
-  border-radius: 0px;
-  vertical-align: bottom;
+  padding: 4px 4px;
+  margin: 4px 4px;
+  /* border-radius: 0px; */
+  vertical-align: middle;
   list-style: none;
 }
 
@@ -109,6 +110,20 @@ a:visited {
   vertical-align: bottom;
 }
 
+.redbutton {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  font-size: 14px;
+  padding: 2px 4px;
+  margin: 2px;
+  vertical-align: bottom;
+  list-style: none;
+}
+.redbutton:hover {
+  background-color: red;
+  color: white;
+  vertical-align: bottom;
+}
 img {
   vertical-align: bottom;
   margin: 2px;
@@ -119,7 +134,7 @@ img {
   flex-wrap: wrap;
   text-decoration: none;
   justify-content: space-between;
-  margin: 6px auto;
+  /* margin: 6px auto; */
 }
 .card {
   flex: 0 1 calc(25% - 1em);
@@ -130,21 +145,53 @@ img {
   padding: 16px 26px;
 }
 .card:hover {
-  box-shadow: 0 50px 40px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 50px 40px 0 rgba(85, 50, 50, 0.2);
   background-color: #f8f8f8;
 }
-
-#newUserForm {
+/* .commentcard {
+  flex: 0 1 calc(25% - 1em);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  min-width: 300px;
   margin: 6px;
+  padding: 16px 26px;
+}
+.commentcard:hover {
+  box-shadow: 0 50px 40px 0 rgba(0, 0, 0, 0.2);
+  background-color: #f8f8f8;
+} */
+
+.newUserForm {
+  margin: 2px auto;
+  padding: 1px;
+  background-color: rgb(129, 129, 129);
+  border: 2px solid #ddd;
+}
+.newTopicForm {
+  margin: 2px auto;
+  padding: 1px;
+  background-color: rgb(129, 129, 129);
+  border: 2px solid #ddd;
 }
 #newArticleForm {
   width: 300px;
-  margin: 6px auto;
+  margin: 2px auto;
   padding: 6px;
-  background-color: rgb(205, 252, 217);
+  background-color: rgb(129, 129, 129);
   border: 2px solid #ddd;
 }
 
+.sortBy {
+  /* width: 320px; */
+  margin: 2px auto;
+  background-color: rgb(129, 129, 129);
+  border: 2px solid #ddd;
+  /* font-size: 12px; */
+  text-align: center;
+  /* height: 30px; */
+  line-height: 30px;
+  vertical-align: middle;
+}
 .articleCard {
   flex: 0 1 calc(25% - 1em);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -163,30 +210,4 @@ img {
 textarea {
   width: 240px;
   height: 80px;
-}
-.sortBy {
-  width: 350px;
-  margin: 6px auto;
-  /* background-color: rgb(205, 252, 217); */
-  /* border: 2px solid #ddd; */
-  font-size: 12px;
-  text-align: center;
-  height: 30px;
-  line-height: 30px;
-  vertical-align: middle;
-}
-
-.redbutton {
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-  font-size: 14px;
-  padding: 3px 4px;
-  margin: 2px;
-  vertical-align: bottom;
-  list-style: none;
-}
-.redbutton:hover {
-  background-color: red;
-  color: white;
-  vertical-align: bottom;
 }

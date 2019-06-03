@@ -8,10 +8,8 @@ class NewTopicForm extends Component {
   };
   render() {
     return this.props.loggedinuser ? (
-      <div>
-        <form id="addTopicForm">
-          Create New Topic:
-          <br />
+      <div className="newTopicForm">
+        <form id="addTopicForm" onSubmit={this.handleSubmit}>
           <input
             className="input-box"
             id="slugInput"
@@ -28,8 +26,11 @@ class NewTopicForm extends Component {
             onChange={this.handleInput}
             value={this.state.descriptionInput}
           />
-          <button className="button" onClick={this.handleSubmit} id="submit">
-            Submit
+          <button className="button" id="submit">
+            Add Topic
+          </button>
+          <button className="button redbutton" onClick={this.props.hideForm}>
+            Close
           </button>
         </form>
       </div>

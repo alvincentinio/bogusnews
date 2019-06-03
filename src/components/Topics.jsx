@@ -7,7 +7,8 @@ import NewTopicForm from "./NewTopicForm";
 class Topics extends React.Component {
   state = {
     topics: null,
-    loading: true
+    loading: true,
+    showTopicForm: false
   };
   componentDidMount() {
     getTopics().then(topics => {
@@ -21,14 +22,26 @@ class Topics extends React.Component {
       <img alt="" src={loader} width="40px" />
     ) : (
       <div>
-        <NewTopicForm
-          loggedinuser={this.props.loggedinuser}
-          refreshTopics={this.refreshTopics}
-        />
+        {this.state.showTopicForm ? (
+          <NewTopicForm
+            loggedinuser={this.props.loggedinuser}
+            refreshTopics={this.refreshTopics}
+            hideForm={this.toggleForm}
+          />
+        ) : (
+          <button className="button" onClick={this.toggleForm}>
+            Add New Topic
+          </button>
+        )}
         <TopicsList topics={topics} loggedinuser={this.props.loggedinuser} />
       </div>
     );
   }
+  toggleForm = event => {
+    event.preventDefault();
+    this.setState({ showTopicForm: !this.state.showTopicForm });
+  };
+
   refreshTopics = newTopic => {
     const newTopicsArray = this.state.topics.slice();
     newTopicsArray.unshift(newTopic);

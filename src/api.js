@@ -64,9 +64,9 @@ export const submitArticle = (username, title, body, topic) => {
     });
 };
 
-export const getComments = id => {
+export const getComments = (id, p) => {
   return axios
-    .get(`${url}/articles/${id}/comments`)
+    .get(`${url}/articles/${id}/comments?p=${p}`)
     .then(({ data: { comments } }) => {
       return comments;
     });

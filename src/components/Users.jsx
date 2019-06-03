@@ -9,7 +9,8 @@ class Users extends Component {
     users: null,
     loading: true,
     defaultAvatarUrl:
-      "https://i155.photobucket.com/albums/s313/alvincentinio/Avatars/default-avatar.png"
+      "https://i155.photobucket.com/albums/s313/alvincentinio/Avatars/default-avatar.png",
+    showUserForm: false
   };
 
   componentDidMount() {
@@ -23,16 +24,32 @@ class Users extends Component {
       <img alt="" src={loader} width="40px" />
     ) : (
       <div>
-        <NewUserForm
-          refreshUsers={this.refreshUsers}
-          loggedinuser={this.props.loggedinuser}
-        />
-        <div className="cards">
-          <UsersList users={users} defaultAvatarUrl={defaultAvatarUrl} />
-        </div>
+        {this.state.showUserForm ? (
+          <NewUserForm
+            loggedinuser={this.props.loggedinuser}
+            refreshUsers={this.refreshUsers}
+            hideForm={this.hideForm}
+          />
+        ) : (
+          <button className="button" onClick={this.displayForm}>
+            Add New User
+          </button>
+        )}
+        <UsersList users={users} defaultAvatarUrl={defaultAvatarUrl} />
       </div>
     );
   }
+
+  displayForm = event => {
+    event.preventDefault();
+    this.setState({ showUserForm: true });
+  };
+  hideForm = event => {
+    console.log("hiding users form");
+    event.preventDefault();
+    this.setState({ showUserForm: false });
+  };
+
   refreshUsers = newUser => {
     const newUsersArray = this.state.users.slice();
     newUsersArray.unshift(newUser);

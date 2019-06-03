@@ -9,7 +9,6 @@ class Articles extends React.Component {
     articles: null,
     loading: true,
     articlesSorted: false,
-    authorsArticlesShowing: false,
     author: null,
     p: 1,
     total_count: 0,
@@ -46,11 +45,11 @@ class Articles extends React.Component {
         {locationState && locationState.deletedArticle && (
           <p>Article Deleted</p>
         )}
-        {this.props.loggedinuser && (
+        {/* {this.props.loggedinuser && (
           <button className="button" onClick={this.getAuthorsArticles}>
             View Your Articles
           </button>
-        )}
+        )} */}
         {this.state.showArticleForm ? (
           <NewArticleForm
             loggedinuser={this.props.loggedinuser}
@@ -86,16 +85,6 @@ class Articles extends React.Component {
       </div>
     );
   }
-  // toggleAuthorsArticles = () => {
-  //   this.setState(prevState => ({
-  //     authorArticlesShowing: !prevState.authorArticlesShowing
-  //   }));
-  // };
-  // toggleAuthorsArticles = () => {
-  //   this.setState({
-  //     authorArticlesShowing: !this.state.authorArticlesShowing
-  //   });
-  // };
   displayForm = event => {
     event.preventDefault();
     this.setState({ showArticleForm: true });
@@ -112,7 +101,6 @@ class Articles extends React.Component {
         this.setState({
           articles: data.articles,
           loading: false,
-          authorArticlesShowing: false,
           total_count: data.total_count,
           p: 1
         });
