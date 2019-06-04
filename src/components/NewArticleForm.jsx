@@ -25,6 +25,8 @@ class NewArticleForm extends Component {
             className="input-box"
             onChange={this.handleChange}
             id="title"
+            width="260px"
+            required={true}
             placeholder="Article Title"
           />
           <textarea
@@ -32,6 +34,7 @@ class NewArticleForm extends Component {
             onChange={this.handleChange}
             width="260px"
             id="body"
+            required={true}
             placeholder="Article Content"
           />
           <br />
@@ -64,10 +67,13 @@ class NewArticleForm extends Component {
     return loading ? (
       <select>loading</select>
     ) : (
-      <select className="input-box" onChange={this.handleChange} id="topic">
-        <option value="none" defaultValue>
-          Choose Topic
-        </option>
+      <select
+        required={true}
+        className="input-box"
+        onChange={this.handleChange}
+        id="topic"
+      >
+        <option value="">Choose Topic</option>
         {availableTopics.map((topic, index) => (
           <option key={index} value={topic.slug}>
             {topic.slug}

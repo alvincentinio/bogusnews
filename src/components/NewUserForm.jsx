@@ -16,6 +16,7 @@ class NewUserForm extends Component {
             id="username"
             type="text"
             placeholder="enter unique username"
+            required={true}
             value={this.state.username}
             onChange={this.handleInput}
           />
@@ -23,6 +24,7 @@ class NewUserForm extends Component {
             className="input-box"
             id="name"
             type="text"
+            required={true}
             placeholder="enter name"
             value={this.state.name}
             onChange={this.handleInput}

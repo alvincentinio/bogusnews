@@ -1,15 +1,18 @@
 import React from "react";
+import Chart from "./Chart";
 
 const Home = ({ loggedinuser }) => {
-  return loggedinuser ? (
+  return (
     <div>
-      <p>Welcome To Al's News</p>
-    </div>
-  ) : (
-    <div>
-      <p>Welcome To Al's News</p>
-      <p>Please Sign In To Post New Content & Comment</p>
-      <p>Please use username "admin" to test</p>
+      {!loggedinuser && (
+        <div>
+          <p>Please Sign In To Post New Content & Comment</p>
+          <p>Please use username "admin" to test</p>
+        </div>
+      )}
+      <div className="homeflex">
+        <Chart />
+      </div>
     </div>
   );
 };

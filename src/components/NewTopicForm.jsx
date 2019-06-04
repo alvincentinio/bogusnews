@@ -14,6 +14,7 @@ class NewTopicForm extends Component {
             className="input-box"
             id="slugInput"
             type="text"
+            required={true}
             placeholder="enter topic"
             onChange={this.handleInput}
             value={this.state.slugInput}
@@ -22,6 +23,7 @@ class NewTopicForm extends Component {
             className="input-box"
             id="descriptionInput"
             type="text"
+            required={true}
             placeholder="enter topic description"
             onChange={this.handleInput}
             value={this.state.descriptionInput}

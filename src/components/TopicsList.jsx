@@ -6,7 +6,7 @@ const TopicsList = ({ topics }) => {
     <div>
       <ul className="cards">
         {topics.map(topic => {
-          return <SingleTopic topic={topic} />;
+          return <SingleTopic key={topic.slug} topic={topic} />;
         })}
       </ul>
     </div>
