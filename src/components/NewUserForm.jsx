@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { addAUser } from "../api";
+import { navigate } from "@reach/router";
 
 class NewUserForm extends Component {
   state = {
     username: "",
     avatar_url: "",
-    name: ""
+    name: "",
+    invalid_url: false
   };
   render() {
     return (
@@ -40,6 +42,9 @@ class NewUserForm extends Component {
           <button className="button" id="submit">
             Create User
           </button>
+          {this.state.invalid_url && (
+            <h6>please enter a valid url or leave blank</h6>
+          )}
           <button className="button redbutton" onClick={this.props.hideForm}>
             Close
           </button>
@@ -51,14 +56,36 @@ class NewUserForm extends Component {
     this.setState({ [event.target.id]: event.target.value });
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
+  postNewUser = () => {
     const { refreshUsers } = this.props;
     const { username, avatar_url, name } = this.state;
-    addAUser(username, avatar_url, name).then(newUser => {
-      refreshUsers(newUser);
-      this.setState({ username: "", avatar_url: "", name: "" });
-    });
+    addAUser(username.trim(), avatar_url.trim(), name.trim())
+      .then(newUser => {
+        refreshUsers(newUser);
+        this.setState({
+          username: "",
+          avatar_url: "",
+          name: "",
+          invalid_url: false
+        });
+      })
+      .catch(({ response: { data, status } }) => {
+        navigate("/error", {
+          state: { from: "users", msg: data.msg, status },
+          replace: true
+        });
+      });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    const { avatar_url } = this.state;
+    const regextest = /^((ftp|http|https):\/\/)?www\.([A-z]+)\.([A-z]{2,})/.test(
+      avatar_url
+    );
+    avatar_url.length === 0 || regextest
+      ? this.postNewUser()
+      : this.setState({ invalid_url: true });
   };
 }
 export default NewUserForm;

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { addATopic } from "../api";
+import { navigate } from "@reach/router";
 
 class NewTopicForm extends Component {
   state = {
@@ -48,10 +49,17 @@ class NewTopicForm extends Component {
     event.preventDefault();
     const { refreshTopics } = this.props;
     const { slugInput, descriptionInput } = this.state;
-    addATopic(slugInput, descriptionInput).then(topic => {
-      refreshTopics(topic);
-      this.setState({ slugInput: "", descriptionInput: "" });
-    });
+    addATopic(slugInput.trim(), descriptionInput.trim())
+      .then(topic => {
+        refreshTopics(topic);
+        this.setState({ slugInput: "", descriptionInput: "" });
+      })
+      .catch(({ response: { data, status } }) => {
+        navigate("/error", {
+          state: { from: "topics", msg: data.msg, status },
+          replace: true
+        });
+      });
   };
 }
 

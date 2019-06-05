@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { submitArticle, getTopics } from "../api";
 import { navigate } from "@reach/router";
+import loader from "../images/loader.gif";
 
 class NewArticleForm extends Component {
   state = {
@@ -11,9 +12,16 @@ class NewArticleForm extends Component {
     loading: true
   };
   componentDidMount() {
-    getTopics().then(topics => {
-      this.setState({ availableTopics: topics, loading: false });
-    });
+    getTopics()
+      .then(topics => {
+        this.setState({ availableTopics: topics, loading: false });
+      })
+      .catch(({ response: { data, status } }) => {
+        navigate("/error", {
+          state: { from: "topics", msg: data.msg, status },
+          replace: true
+        });
+      });
   }
 
   render() {
@@ -56,16 +64,18 @@ class NewArticleForm extends Component {
     event.preventDefault();
     const { loggedinuser } = this.props;
     const { title, body, topic } = this.state;
-    submitArticle(loggedinuser.username, title, body, topic).then(article => {
-      navigate(`/articles/${article.article_id}`, { state: { new: true } });
-    });
+    submitArticle(loggedinuser.username, title.trim(), body.trim(), topic).then(
+      article => {
+        navigate(`/articles/${article.article_id}`, { state: { new: true } });
+      }
+    );
   };
 
   populateTopicSelect = () => {
     const { availableTopics } = this.state;
     const { loading } = this.state;
     return loading ? (
-      <select>loading</select>
+      <img alt="" src={loader} width="20px" />
     ) : (
       <select
         required={true}

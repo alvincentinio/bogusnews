@@ -3,6 +3,7 @@ import { getUsers } from "../api";
 import loader from "../images/loader.gif";
 import NewUserForm from "./NewUserForm";
 import UsersList from "./UsersList";
+import { navigate } from "@reach/router";
 
 class Users extends Component {
   state = {
@@ -12,15 +13,22 @@ class Users extends Component {
   };
 
   componentDidMount() {
-    getUsers().then(users => {
-      this.setState({ users, loading: false });
-    });
+    getUsers()
+      .then(users => {
+        this.setState({ users, loading: false });
+      })
+      .catch(({ response: { data, status } }) => {
+        navigate("/error", {
+          state: { from: "users", msg: data.msg, status },
+          replace: true
+        });
+      });
   }
 
   render() {
     const { users, loading } = this.state;
     return loading ? (
-      <img alt="" src={loader} width="40px" />
+      <img alt="" src={loader} width="30px" />
     ) : (
       <div>
         {this.state.showUserForm ? (

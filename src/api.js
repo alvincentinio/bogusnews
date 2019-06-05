@@ -3,14 +3,9 @@ const url = "https://alcrewe-news.herokuapp.com/api";
 // const url = "https://localhost:9090/api";
 
 export const getUser = username => {
-  return axios
-    .get(`${url}/users/${username}`)
-    .then(({ data: { user } }) => {
-      return user;
-    })
-    .catch(error => {
-      console.log(error, "error");
-    });
+  return axios.get(`${url}/users/${username}`).then(({ data: { user } }) => {
+    return user;
+  });
 };
 export const getUsers = () => {
   return axios.get(`${url}/users`).then(({ data: { users } }) => {

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { patchCommentVotes, deleteAComment } from "../api";
 import { formatDate } from "../utils/formatData";
+import { navigate } from "@reach/router";
 
 class SingleComment extends Component {
   state = {
@@ -51,8 +52,14 @@ class SingleComment extends Component {
     );
   }
   handleCommentVote = (event, voteIncrement) => {
-    patchCommentVotes(event.target.id, voteIncrement);
-
+    patchCommentVotes(event.target.id, voteIncrement).catch(err => {
+      this.setState(prevState => {
+        const newVote = prevState.commentVotes - voteIncrement;
+        return {
+          commentVotes: newVote
+        };
+      });
+    });
     this.setState(prevState => {
       const newVote = prevState.commentVotes + voteIncrement;
       return {
@@ -62,10 +69,17 @@ class SingleComment extends Component {
   };
   handleDeleteComment = (event, comment_id) => {
     const { refreshCommentCount } = this.props;
-    deleteAComment(event.target.id, comment_id).then(res => {
-      this.setState({ commentDeleted: true });
-      refreshCommentCount();
-    });
+    deleteAComment(event.target.id, comment_id)
+      .then(res => {
+        this.setState({ commentDeleted: true });
+        refreshCommentCount();
+      })
+      .catch(({ response: { data, status } }) => {
+        navigate("/error", {
+          state: { from: "comments", msg: data.msg, status },
+          replace: true
+        });
+      });
   };
 }
 

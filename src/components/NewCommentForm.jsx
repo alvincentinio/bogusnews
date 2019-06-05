@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { addAComment } from "../api";
-// import { navigate } from "@reach/router";
+import { navigate } from "@reach/router";
 
 class NewCommentForm extends Component {
   state = {
@@ -42,11 +42,18 @@ class NewCommentForm extends Component {
       refreshCommentCount
     } = this.props;
     const { bodyInput } = this.state;
-    addAComment(loggedinuser.username, bodyInput, article_id).then(comment => {
-      this.setState({ bodyInput: "" });
-      refreshComments(comment);
-      refreshCommentCount();
-    });
+    addAComment(loggedinuser.username, bodyInput.trim(), article_id)
+      .then(comment => {
+        this.setState({ bodyInput: "" });
+        refreshComments(comment);
+        refreshCommentCount();
+      })
+      .catch(({ response: { data, status } }) => {
+        navigate("/error", {
+          state: { from: "comment form", msg: data.msg, status },
+          replace: true
+        });
+      });
   };
 }
 

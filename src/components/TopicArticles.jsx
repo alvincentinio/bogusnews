@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { getArticles } from "../api";
 import loader from "../images/loader.gif";
 import ArticleList from "./ArticleList";
+import { navigate } from "@reach/router";
 
 class TopicArticles extends Component {
   state = {
@@ -12,13 +13,20 @@ class TopicArticles extends Component {
   };
   componentDidMount() {
     const { topic } = this.props;
-    getArticles({ topic }).then(({ data }) => {
-      this.setState({
-        articles: data.articles,
-        loading: false,
-        total_count: data.total_count
+    getArticles({ topic })
+      .then(({ data }) => {
+        this.setState({
+          articles: data.articles,
+          loading: false,
+          total_count: data.total_count
+        });
+      })
+      .catch(({ response: { data, status } }) => {
+        navigate("/error", {
+          state: { from: "topic articles", msg: data.msg, status },
+          replace: true
+        });
       });
-    });
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevState.p !== this.state.p) {
@@ -29,7 +37,7 @@ class TopicArticles extends Component {
     const { articles, loading, p, total_count } = this.state;
     const { topic, loggedinuser } = this.props;
     return loading ? (
-      <img alt="" src={loader} width="40px" />
+      <img alt="" src={loader} width="30px" />
     ) : (
       <div>
         {total_count ? (
@@ -39,7 +47,7 @@ class TopicArticles extends Component {
             </h4>
           </div>
         ) : loading ? (
-          <img alt="" src={loader} width="40px" />
+          <img alt="" src={loader} width="30px" />
         ) : (
           <h4>Sorry there are no articles in the {topic} topic yet</h4>
         )}
@@ -71,13 +79,20 @@ class TopicArticles extends Component {
   fetchArticles = () => {
     const { p } = this.state;
     const { topic } = this.props;
-    getArticles({ p, topic }).then(({ data }) => {
-      this.setState({
-        articles: data.articles,
-        total_count: data.total_count,
-        loading: false
+    getArticles({ p, topic })
+      .then(({ data }) => {
+        this.setState({
+          articles: data.articles,
+          total_count: data.total_count,
+          loading: false
+        });
+      })
+      .catch(({ response: { data, status } }) => {
+        navigate("/error", {
+          state: { from: "topoc articles", msg: data.msg, status },
+          replace: true
+        });
       });
-    });
   };
   handleSort = (sort_by, order) => {
     const { topic } = this.props;
@@ -86,13 +101,20 @@ class TopicArticles extends Component {
       order: order,
       topic: topic
     };
-    getArticles(query).then(({ data }) => {
-      this.setState({
-        articles: data.articles,
-        loading: false,
-        total_count: data.total_count
+    getArticles(query)
+      .then(({ data }) => {
+        this.setState({
+          articles: data.articles,
+          loading: false,
+          total_count: data.total_count
+        });
+      })
+      .catch(({ response: { data, status } }) => {
+        navigate("/error", {
+          state: { from: "topic articles", msg: data.msg, status },
+          replace: true
+        });
       });
-    });
   };
   changePage = direction => {
     this.setState(prevState => {

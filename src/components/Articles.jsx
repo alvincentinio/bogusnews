@@ -3,6 +3,7 @@ import { getArticles } from "../api";
 import loader from "../images/loader.gif";
 import ArticleList from "./ArticleList";
 import NewArticleForm from "./NewArticleForm";
+import { navigate } from "@reach/router";
 
 class Articles extends React.Component {
   state = {
@@ -22,8 +23,11 @@ class Articles extends React.Component {
           total_count: data.total_count
         });
       })
-      .catch(err => {
-        console.dir(err);
+      .catch(({ response: { data, status } }) => {
+        navigate("/error", {
+          state: { from: "articles", msg: data.msg, status },
+          replace: true
+        });
       });
   }
   componentDidUpdate(prevProps, prevState) {
@@ -36,7 +40,7 @@ class Articles extends React.Component {
     const { articles, loading, p, showArticleForm, total_count } = this.state;
     const { state: locationState } = this.props.location;
     return loading ? (
-      <img alt="" src={loader} width="40px" />
+      <img alt="" src={loader} width="30px" />
     ) : (
       <div>
         {locationState && locationState.deletedArticle && (

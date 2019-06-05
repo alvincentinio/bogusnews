@@ -3,6 +3,7 @@ import { getTopics } from "../api";
 import loader from "../images/loader.gif";
 import TopicsList from "./TopicsList";
 import NewTopicForm from "./NewTopicForm";
+import { navigate } from "@reach/router";
 
 class Topics extends React.Component {
   state = {
@@ -11,16 +12,23 @@ class Topics extends React.Component {
     showTopicForm: false
   };
   componentDidMount() {
-    getTopics().then(topics => {
-      this.setState({ topics, loading: false });
-    });
+    getTopics()
+      .then(topics => {
+        this.setState({ topics, loading: false });
+      })
+      .catch(({ response: { data, status } }) => {
+        navigate("/error", {
+          state: { from: "topics", msg: data.msg, status },
+          replace: true
+        });
+      });
   }
 
   render() {
     const { topics, loading } = this.state;
     const { loggedinuser } = this.props;
     return loading ? (
-      <img alt="" src={loader} width="40px" />
+      <img alt="" src={loader} width="30px" />
     ) : (
       <div>
         {this.state.showTopicForm ? (

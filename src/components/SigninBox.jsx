@@ -1,17 +1,24 @@
 import React from "react";
-import { getUser } from "../api";
+import { getUser, getUsers } from "../api";
 
 class SigninBox extends React.Component {
   state = {
     usernameInput: "",
     defaultAvatarUrl:
-      "https://i155.photobucket.com/albums/s313/alvincentinio/Avatars/default-avatar.png"
+      "https://i155.photobucket.com/albums/s313/alvincentinio/Avatars/default-avatar.png",
+    users: null,
+    invalidUser: false
   };
+  componentDidMount() {
+    getUsers().then(users => {
+      this.setState({ users });
+    });
+  }
+
   render() {
     const { loggedinuser } = this.props;
     const { logoutUser } = this.props;
-    const { defaultAvatarUrl } = this.state;
-
+    const { defaultAvatarUrl, invalidUser } = this.state;
     return loggedinuser ? (
       <div id="signinBox">
         {loggedinuser.name}
@@ -31,6 +38,18 @@ class SigninBox extends React.Component {
           alt={`${loggedinuser.username}_avatar`}
         />
       </div>
+    ) : invalidUser ? (
+      <form onSubmit={this.handleSubmit}>
+        <input
+          className="input-box"
+          onChange={this.handleInput}
+          required={true}
+          placeholder="enter username"
+        />
+        <br />
+        <h6>invalid user, please try again</h6>
+        <button className="button">Sign In</button>
+      </form>
     ) : (
       <form onSubmit={this.handleSubmit}>
         <input
@@ -40,7 +59,7 @@ class SigninBox extends React.Component {
           placeholder="enter username"
         />
         <br />
-        <button className="button">Sign In</button>{" "}
+        <button className="button">Sign In</button>
       </form>
     );
   }
@@ -51,9 +70,14 @@ class SigninBox extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     const { loginUser } = this.props;
-    getUser(this.state.usernameInput).then(validUser => {
-      loginUser(validUser);
-    });
+    const { users, usernameInput } = this.state;
+    const foundUser = users.some(user => user.username === usernameInput);
+    foundUser
+      ? getUser(usernameInput).then(validUser => {
+          loginUser(validUser);
+          this.setState({ invalidUser: false });
+        })
+      : this.setState({ invalidUser: true, usernameInput: "" });
   };
 }
 

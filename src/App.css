@@ -20,6 +20,9 @@ h1 {
 h5 {
   margin: 6px 10px;
 }
+h6 {
+  margin: 0;
+}
 /* body {
   margin: 0;
 } */

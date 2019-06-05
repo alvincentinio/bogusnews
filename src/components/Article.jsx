@@ -3,14 +3,12 @@ import { getArticle, patchArticleVotes, deleteAnArticle } from "../api";
 import { formatDate } from "../utils/formatData";
 import CommentsList from "./CommentsList";
 import { navigate } from "@reach/router";
-import ShowError from "./ShowError";
+import loader from "../images/loader.gif";
 
 class Article extends Component {
   state = {
     article: null,
     articleVotes: 0,
-    errorStatus: null,
-    errorMsg: null,
     commentsUpdated: false,
     loading: true,
     confirmButtonsShowing: false
@@ -22,18 +20,10 @@ class Article extends Component {
         this.setState({ article, loading: false, commentsUpdated: false });
       })
       .catch(({ response: { data, status } }) => {
-        console.log(data.msg, status);
-        //error in state
-        this.setState({
-          errorMsg: data.msg,
-          errorStatus: status,
-          loading: false
+        navigate("/error", {
+          state: { from: "article", msg: data.msg, status },
+          replace: true
         });
-        // navigate -> /notfound
-        // navigate("/error", {
-        //   state: { from: "article", msg: data.message, status },
-        //   replace: true
-        // });
       });
   }
   componentDidUpdate() {
@@ -49,15 +39,11 @@ class Article extends Component {
       article,
       articleVotes,
       loading,
-      errorMsg,
-      errorStatus,
       confirmButtonsShowing
     } = this.state;
     const { loggedinuser } = this.props;
     const { state: locationState } = this.props.location;
-    if (loading) return <p>Loading...</p>;
-    if (errorMsg)
-      return <ShowError errorMsg={errorMsg} errorStatus={errorStatus} />;
+    if (loading) return <img alt="" src={loader} width="30px" />;
     return (
       <div>
         {locationState && locationState.new && <p>Your newly posted article</p>}
@@ -110,7 +96,14 @@ class Article extends Component {
     );
   }
   handleArticleVote = voteIncrement => {
-    patchArticleVotes(this.props.article_id, voteIncrement);
+    patchArticleVotes(this.props.article_id, voteIncrement).catch(err => {
+      this.setState(prevState => {
+        const newVote = prevState.articleVotes - voteIncrement;
+        return {
+          articleVotes: newVote
+        };
+      });
+    });
     this.setState(prevState => {
       const newVote = prevState.articleVotes + voteIncrement;
       return {
@@ -136,34 +129,3 @@ class Article extends Component {
   };
 }
 export default Article;
-
-//errors
-// componentDidMount() {
-//   const { article_id } = this.props;
-
-//   axios.get(`https://alcrewe-news.herokuapp.com/api/articles/${article_id}`)
-//     .then(({ data: { article } }) => {
-//       this.setState({ article });
-//     })
-//     .catch(({ response }) => {
-//       navigate("/oops", {
-//         replace: true, state: {
-//           code: response.status,
-//           msg: response.data.msg
-//         }
-//       });
-//     });
-
-//   axios.get(`https://alcrewe-news.herokuapp.com/api/articles/${article_id}/comments`)
-//     .then(({ data: { comments } }) => {
-//       this.setState({ comments })
-//     });
-// }
-//if (this.state.err)
-// return (
-//   <Link
-//     to={{
-//       pathname: "/error",
-//       state: { err: this.state.err, from: "article" }
-//     }}
-//   />

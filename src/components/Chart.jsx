@@ -11,14 +11,21 @@ class Chart extends Component {
   };
 
   componentDidMount() {
-    getArticles({ sort_by: "votes" }).then(({ data }) => {
-      this.setState({ articles: data.articles, loading: false });
-    });
+    getArticles({ sort_by: "votes" })
+      .then(({ data }) => {
+        this.setState({ articles: data.articles, loading: false });
+      })
+      .catch(({ response: { data, status } }) => {
+        navigate("/error", {
+          state: { from: "homepage", msg: data.msg, status },
+          replace: true
+        });
+      });
   }
   render() {
     const { loading } = this.state;
     return loading ? (
-      <img alt="" src={loader} width="40px" />
+      <img alt="" src={loader} width="30px" />
     ) : (
       <div>
         <h4>Top Voted Articles</h4>
