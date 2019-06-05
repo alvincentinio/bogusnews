@@ -20,7 +20,7 @@ class SingleComment extends Component {
         <h3>
           Posted By: {comment.author}@ {formatDate(comment.created_at)}
         </h3>
-        <p>Comment: {comment.body}</p>
+        <p>{comment.body}</p>
         <button
           className="button"
           id={comment.comment_id}
