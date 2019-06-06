@@ -80,9 +80,10 @@ class NewUserForm extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const { avatar_url } = this.state;
-    const regextest = /^((ftp|http|https):\/\/)?www\.([A-z]+)\.([A-z]{2,})/.test(
+    const regextest = /^((ftp|http|https):\/\/)?(www|i55)\.([A-z]+)\.([A-z]{2,})/.test(
       avatar_url
     );
+    // const regextest = true;
     avatar_url.length === 0 || regextest
       ? this.postNewUser()
       : this.setState({ invalid_url: true });

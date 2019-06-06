@@ -42,7 +42,7 @@ class Articles extends React.Component {
     return loading ? (
       <img alt="" src={loader} width="30px" />
     ) : (
-      <div>
+      <div id="main">
         {locationState && locationState.deletedArticle && (
           <p>Article Deleted</p>
         )}

@@ -45,7 +45,7 @@ class Article extends Component {
     const { state: locationState } = this.props.location;
     if (loading) return <img alt="" src={loader} width="30px" />;
     return (
-      <div>
+      <div id="main">
         {locationState && locationState.new && <p>Your newly posted article</p>}
         <h2>{article.title}</h2>
         {loggedinuser &&
@@ -75,6 +75,9 @@ class Article extends Component {
           disabled={articleVotes === 1}
           onClick={() => this.handleArticleVote(1)}
         >
+          <span aria-label="like " role="img">
+            👍
+          </span>
           Like
         </button>
         <h5>Votes: {article.votes + articleVotes}</h5>
@@ -83,6 +86,9 @@ class Article extends Component {
           disabled={articleVotes === -1}
           onClick={() => this.handleArticleVote(-1)}
         >
+          <span aria-label="like " role="img">
+            👎
+          </span>
           Dislike
         </button>
         <h6>Number Of Comments: {article.comment_count}</h6>

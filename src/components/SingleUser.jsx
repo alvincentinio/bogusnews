@@ -6,7 +6,7 @@ const SingleUser = ({ user }) => {
     "https://i155.photobucket.com/albums/s313/alvincentinio/Avatars/default-avatar.png";
 
   return (
-    <div>
+    <div className="userCard">
       <img
         src={user.avatar_url}
         onError={e => {

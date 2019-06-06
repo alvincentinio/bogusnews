@@ -1,6 +1,8 @@
-# Project Title
+# Bogus News
 
-One Paragraph of project description goes here
+A front-end app built with React.js which is served by my API, details of which can be found in my GitHub repository [here](https://github.com/alvincentinio/ncnews). Bogus News is a reddit-style website which allows users to post articles and comments in different topics and also vote these articles and comments up and down. Users can also create new topics and new users can be added to the database.
+
+The hosted ncnews API is hosted on Heroku [here](https://alcrewe-news.herokuapp.com/api)
 
 ## Getting Started
 

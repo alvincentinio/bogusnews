@@ -7,7 +7,7 @@ const ArticleList = ({ articles, loggedinuser, handleSort }) => {
   return (
     <div>
       <ArticleSortBy handleSort={handleSort} />
-      <ul className="cards">
+      <ul className="articleCardList">
         {articles.map(article => {
           return (
             <Link
@@ -16,16 +16,16 @@ const ArticleList = ({ articles, loggedinuser, handleSort }) => {
               loggedinuser={loggedinuser}
             >
               <li className="articleCard">
-                <h2>{article.title}</h2>
+                <h3>{article.title}</h3>
                 <br />
-                <h5>
-                  By {article.author} @ {formatDate(article.created_at)}
-                  <br /> in
-                  <br />
-                  the {article.topic} topic
-                </h5>{" "}
+                <h4>
+                  by {article.author}
+                  <br />@<br /> {formatDate(article.created_at)}
+                  <br /> in the {article.topic} topic
+                </h4>{" "}
                 <br />
-                Votes: {article.votes} Comments: {article.comment_count}
+                <h5>Votes: {article.votes}</h5>
+                <h6>Comments: {article.comment_count}</h6>
               </li>
             </Link>
           );

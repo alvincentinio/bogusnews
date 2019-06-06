@@ -6,11 +6,12 @@ const Home = ({ loggedinuser }) => {
     <div>
       {!loggedinuser && (
         <div>
-          <p>Please Sign In To Post New Content & Comment</p>
-          <p>Please use username "admin" to test</p>
+          <h5>Please Sign In To Post New Content, Vote & Add Comments</h5>
+          <h6>Please use username "admin" to test</h6>
+          <br />
         </div>
       )}
-      <div className="homeflex">
+      <div>
         <Chart />
       </div>
     </div>

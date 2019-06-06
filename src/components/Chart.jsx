@@ -23,22 +23,57 @@ class Chart extends Component {
       });
   }
   render() {
+    const legendOptions = {
+      onClick: (event, article) => {
+        this.navigateFromLegend(article.index);
+      },
+      onHover: (event, article) => {
+        event.target.style.cursor = "pointer";
+      }
+    };
     const { loading } = this.state;
     return loading ? (
       <img alt="" src={loader} width="30px" />
     ) : (
-      <div>
+      <div className="chart-container">
         <h4>Top Voted Articles</h4>
+        <h6>Please Click on An Article To View</h6>
+        <br />
         <Doughnut
           onElementsClick={article => {
             this.navigatetoArticle(article);
           }}
-          // height={300}
           data={this.populateData()}
+          options={{
+            maintainAspectRatio: true,
+            responsive: true,
+            cutoutPercentage: 40,
+            legend: {
+              position: "top",
+              fullWidth: true,
+              onClick: legendOptions.onClick,
+              onHover: legendOptions.onHover,
+              itemWrap: true,
+              labels: {
+                fontColor: "#191970",
+                boxWidth: 10,
+                fontSize: 12,
+                fontStyle: "bold"
+              }
+            },
+            layout: {
+              padding: 6
+            }
+          }}
         />
       </div>
     );
   }
+  navigateFromLegend = articleIndex => {
+    const { articles } = this.state;
+    const article_id = articles[articleIndex].article_id;
+    navigate(`/articles/${article_id}`);
+  };
   navigatetoArticle = article => {
     const { articles } = this.state;
     if (article.length !== 0) {
@@ -88,16 +123,16 @@ class Chart extends Component {
             "#808080"
           ],
           hoverBackgroundColor: [
-            "#d6dbe3",
-            "#d6dbe3",
-            "#d6dbe3",
-            "#d6dbe3",
-            "#d6dbe3",
-            "#d6dbe3",
-            "#d6dbe3",
-            "#d6dbe3",
-            "#d6dbe3",
-            "#d6dbe3"
+            "#191970",
+            "#191970",
+            "#191970",
+            "#191970",
+            "#191970",
+            "#191970",
+            "#191970",
+            "#191970",
+            "#191970",
+            "#191970"
           ]
         }
       ]

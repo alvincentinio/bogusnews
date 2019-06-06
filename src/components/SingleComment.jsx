@@ -27,15 +27,21 @@ class SingleComment extends Component {
           disabled={commentVotes === 1 || loggedinuser === comment.author}
           onClick={event => this.handleCommentVote(event, 1)}
         >
+          <span aria-label="like " role="img">
+            👍
+          </span>
           Like
         </button>
-        <span> Votes: {comment.votes + commentVotes} </span>
+        <h5> Votes: {comment.votes + commentVotes} </h5>
         <button
           className="redbutton"
           id={comment.comment_id}
           disabled={commentVotes === -1 || loggedinuser === comment.author}
           onClick={event => this.handleCommentVote(event, -1)}
         >
+          <span aria-label="like " role="img">
+            👎
+          </span>
           Dislike
         </button>
         <br />

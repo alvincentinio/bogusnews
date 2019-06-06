@@ -3,10 +3,10 @@ import SingleUser from "./SingleUser";
 
 const UsersList = ({ users }) => {
   return (
-    <ul className="cards">
+    <ul className="userCardList">
       {users.map(user => {
         return (
-          <li className="card" key={user.username}>
+          <li key={user.username}>
             <SingleUser user={user} />
           </li>
         );

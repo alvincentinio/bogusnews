@@ -8,7 +8,7 @@ const Header = ({ loginUser, logoutUser, loggedinuser }) => {
     <div id="header">
       <div id="leftlogo">
         <Link to="/">
-          <img alt="logo" width="80" src={newslogo} />
+          <img id="logo" alt="logo" width="120px" src={newslogo} />
         </Link>
       </div>
       <div id="title">
@@ -21,7 +21,7 @@ const Header = ({ loginUser, logoutUser, loggedinuser }) => {
       </div>
       <div id="rightlogo">
         <Link to="/">
-          <img alt="logo" width="80" src={newslogo} />
+          <img id="logo" alt="logo" width="120px" src={newslogo} />
         </Link>
       </div>
     </div>

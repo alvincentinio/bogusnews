@@ -39,28 +39,32 @@ class SigninBox extends React.Component {
         />
       </div>
     ) : invalidUser ? (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          className="input-box"
-          onChange={this.handleInput}
-          required={true}
-          placeholder="enter username"
-        />
-        <br />
-        <h6>invalid user, please try again</h6>
-        <button className="button">Sign In</button>
-      </form>
+      <div id="signinbox">
+        <form onSubmit={this.handleSubmit}>
+          <input
+            className="input-box"
+            onChange={this.handleInput}
+            required={true}
+            placeholder="enter username"
+          />
+          <br />
+          <h6>invalid user, please try again</h6>
+          <button className="button">Sign In</button>
+        </form>
+      </div>
     ) : (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          className="input-box"
-          onChange={this.handleInput}
-          required={true}
-          placeholder="enter username"
-        />
-        <br />
-        <button className="button">Sign In</button>
-      </form>
+      <div id="signinbox">
+        <form onSubmit={this.handleSubmit}>
+          <input
+            className="input-box"
+            onChange={this.handleInput}
+            required={true}
+            placeholder="enter username"
+          />
+          <br />
+          <button className="button">Sign In</button>
+        </form>
+      </div>
     );
   }
   handleInput = event => {
