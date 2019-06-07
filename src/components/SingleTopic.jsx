@@ -4,7 +4,7 @@ import { Link } from "@reach/router";
 const SingleTopic = ({ topic }) => {
   return (
     <div>
-      <li className="card" key={topic.slug}>
+      <li className="topicCard" key={topic.slug}>
         <h2>{topic.slug}</h2>
         <p>Description: {topic.description}</p>
 

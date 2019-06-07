@@ -3,7 +3,7 @@ import SingleUser from "./SingleUser";
 
 const UsersList = ({ users }) => {
   return (
-    <ul className="userCardList">
+    <ul className="cardList">
       {users.map(user => {
         return (
           <li key={user.username}>

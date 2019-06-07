@@ -4,7 +4,7 @@ import SingleTopic from "./SingleTopic";
 const TopicsList = ({ topics }) => {
   return (
     <div>
-      <ul className="cards">
+      <ul className="cardList">
         {topics.map(topic => {
           return <SingleTopic key={topic.slug} topic={topic} />;
         })}

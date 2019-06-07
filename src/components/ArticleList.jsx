@@ -7,7 +7,7 @@ const ArticleList = ({ articles, loggedinuser, handleSort }) => {
   return (
     <div>
       <ArticleSortBy handleSort={handleSort} />
-      <ul className="articleCardList">
+      <ul className="cardList">
         {articles.map(article => {
           return (
             <Link
