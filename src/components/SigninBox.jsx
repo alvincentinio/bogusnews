@@ -22,10 +22,6 @@ class SigninBox extends React.Component {
     return loggedinuser ? (
       <div id="signinBox">
         {loggedinuser.name}
-        <br />
-        <button className="button" onClick={logoutUser}>
-          Sign Out
-        </button>{" "}
         <img
           id="avatar-img"
           src={loggedinuser.avatar_url}
@@ -37,6 +33,9 @@ class SigninBox extends React.Component {
           height="26"
           alt={`${loggedinuser.username}_avatar`}
         />
+        <button className="button" onClick={logoutUser}>
+          Sign Out
+        </button>
       </div>
     ) : invalidUser ? (
       <div id="signinbox">
@@ -56,12 +55,11 @@ class SigninBox extends React.Component {
       <div id="signinbox">
         <form onSubmit={this.handleSubmit}>
           <input
-            className="input-box"
+            className="usernameInput"
             onChange={this.handleInput}
             required={true}
             placeholder="enter username"
           />
-          <br />
           <button className="button">Sign In</button>
         </form>
       </div>

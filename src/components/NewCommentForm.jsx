@@ -10,8 +10,7 @@ class NewCommentForm extends Component {
   render() {
     return this.props.loggedinuser ? (
       <form id="addCommentForm" onSubmit={this.handleSubmit}>
-        Comment:
-        <br />
+        <h5>Comment On this Article</h5>
         <textarea
           id="bodyInput"
           type="text"

@@ -39,7 +39,7 @@ class CommentsList extends Component {
           refreshComments={this.refreshComments}
           refreshCommentCount={refreshCommentCount}
         />
-        <ul>
+        <ul className="cardList">
           {comments.map(comment => {
             return (
               <li key={comment.comment_id}>
