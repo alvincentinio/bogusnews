@@ -80,7 +80,8 @@ class Article extends Component {
                   Delete Your Article
                 </button>
               )}
-            <h5>{article.comment_count} Comments</h5>
+            <br />
+            <h5>This article has {article.comment_count} comments</h5>
           </div>
           <div className="articleLike">
             <img
