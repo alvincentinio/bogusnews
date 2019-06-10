@@ -131,7 +131,7 @@ a:hover {
 }
 a:visited {
   text-decoration: none;
-  color: black;
+  color: white;
 }
 .button {
   -webkit-transition-duration: 0.5s;
