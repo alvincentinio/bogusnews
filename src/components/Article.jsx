@@ -84,7 +84,8 @@ class Article extends Component {
             <h5>This article has {article.comment_count} comments</h5>
           </div>
           <div className="articleLike">
-            <img
+            <input
+              type="image"
               alt=""
               src={greenarrow}
               className="votearrow"
@@ -104,7 +105,8 @@ class Article extends Component {
             <h4>{article.votes + articleVotes}</h4>
           </div>
           <div className="articleDislike">
-            <img
+            <input
+              type="image"
               alt=""
               src={redarrow}
               className="votearrow"
