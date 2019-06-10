@@ -10,7 +10,7 @@ import Topics from "./components/Topics";
 import TopicArticles from "./components/TopicArticles";
 import Articles from "./components/Articles";
 import Article from "./components/Article";
-import ShowError from "./components/ShowError";
+// import ShowError from "./components/ShowError";
 import Home from "./components/Home";
 import Admin from "./components/Admin";
 import UsersArticles from "./components/UsersArticles";
@@ -57,7 +57,7 @@ class App extends Component {
               loggedinuser={loggedinuser}
             />
             <Admin path="/myadmin" loggedinuser={loggedinuser} />
-            <ShowError default path="/error" />
+            {/* <ShowError default path="/error" /> */}
           </ScrollToTop>
         </Router>
       </div>

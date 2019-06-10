@@ -81,7 +81,6 @@ ul {
 }
 #topnav {
   overflow: hidden;
-  /* background-color: #191970; */
   font-size: 1em;
   width: 100vw;
   background: #133c99; /* fallback for old browsers */
@@ -105,7 +104,6 @@ ul {
   text-decoration: none;
 }
 #topnav a:hover {
-  /* background-color: #ffebcd; */
   background-color: #f8f8f8;
   color: black;
   font-weight: bold;
@@ -133,7 +131,7 @@ a:hover {
 }
 a:visited {
   text-decoration: none;
-  color: white;
+  color: black;
 }
 .button {
   -webkit-transition-duration: 0.5s;
@@ -152,8 +150,6 @@ a:visited {
   color: black;
   vertical-align: middle;
   text-decoration: none;
-  /* font-weight: bold; */
-  /* border: 1px black solid; */
   cursor: pointer;
   border-radius: 4px;
 }
@@ -175,8 +171,6 @@ a:visited {
   vertical-align: bottom;
   border: none;
   cursor: pointer;
-  /* border: 1px black solid; */
-  /* font-weight: bold; */
 }
 #logo {
   vertical-align: bottom;
@@ -300,9 +294,7 @@ a:visited {
   text-align: center;
   vertical-align: middle;
   padding: 4px 0px;
-  /* margin: 2px; */
   font-size: 12px;
-  /* font-size:0.9em; */
   font-weight: bold;
 }
 .commentLike {
@@ -322,7 +314,6 @@ a:visited {
   transition-duration: 0.5s;
   font-size: 12px;
   padding: 2px 4px;
-  /* margin: 2px; */
   vertical-align: middle;
   color: black;
   font-weight: bold;
@@ -345,7 +336,6 @@ a:visited {
   transition-duration: 0.5s;
   font-size: 12px;
   padding: 2px 4px;
-  /* margin: 2px; */
   vertical-align: middle;
   color: black;
   font-weight: bold;
@@ -364,8 +354,8 @@ a:visited {
 }
 .commentCard:hover {
   box-shadow: 0 50px 40px 0 rgba(0, 0, 0, 0.2);
-  /* background-color: steelblue; */
-  /* color: #ffebcd; */
+  background-color: steelblue;
+  color: #ffebcd;
 }
 .articleCard {
   flex: 0 1 calc(25% - 1em);
@@ -383,7 +373,6 @@ a:visited {
 }
 .articleCard:hover {
   box-shadow: 0 50px 40px 0 rgba(0, 0, 0, 0.2);
-  /* background-color: steelblue; */
   color: #ffebcd;
   background: #133c99; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -413,7 +402,6 @@ a:visited {
 }
 .userCard:hover {
   box-shadow: 0 50px 40px 0 rgba(0, 0, 0, 0.2);
-  /* background-color: steelblue; */
   color: #ffebcd;
   background: #133c99; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -489,15 +477,3 @@ textarea {
   height: 80px;
   border-radius: 6px;
 }
-
-background: #133c99; /* fallback for old browsers */
-background: -webkit-linear-gradient(
-  to bottom,
-  #191970,
-  #4682b4
-); /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(
-  to bottom,
-  #191970,
-  #4682b4
-); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */

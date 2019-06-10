@@ -6,6 +6,7 @@ import loader from "../images/loader.gif";
 import redarrow from "../images/redarrow48x48.png";
 import greenarrow from "../images/greenarrow48x48.png";
 import Moment from "react-moment";
+import ShowError from "./ShowError";
 
 class Article extends Component {
   state = {
@@ -13,7 +14,9 @@ class Article extends Component {
     articleVotes: 0,
     commentsUpdated: false,
     loading: true,
-    confirmButtonsShowing: false
+    confirmButtonsShowing: false,
+    errorMsg: null,
+    errorStatus: null
   };
 
   componentDidMount() {
@@ -22,9 +25,10 @@ class Article extends Component {
         this.setState({ article, loading: false, commentsUpdated: false });
       })
       .catch(({ response: { data, status } }) => {
-        navigate("/error", {
-          state: { from: "article", msg: data.msg, status },
-          replace: true
+        this.setState({
+          errorMsg: data.msg,
+          errorStatus: status,
+          loading: false
         });
       });
   }
@@ -41,10 +45,14 @@ class Article extends Component {
       article,
       articleVotes,
       loading,
-      confirmButtonsShowing
+      confirmButtonsShowing,
+      errorMsg,
+      errorStatus
     } = this.state;
     const { loggedinuser } = this.props;
     const { state: locationState } = this.props.location;
+    if (errorMsg)
+      return <ShowError errorMsg={errorMsg} errorStatus={errorStatus} />;
     if (loading) return <img alt="" src={loader} width="30px" />;
     return (
       <div className="articleMain">
@@ -92,14 +100,6 @@ class Article extends Component {
               disabled={articleVotes === 1}
               onClick={() => this.handleArticleVote(1)}
             />
-
-            {/* <button
-              className="button"
-              disabled={articleVotes === 1}
-              onClick={() => this.handleArticleVote(1)}
-            >
-              Like
-            </button> */}
           </div>
           <div className="articleVotes">
             <h4>{article.votes + articleVotes}</h4>
@@ -113,14 +113,6 @@ class Article extends Component {
               disabled={articleVotes === -1}
               onClick={() => this.handleArticleVote(-1)}
             />
-
-            {/* <button
-              className="redbutton"
-              disabled={articleVotes === -1}
-              onClick={() => this.handleArticleVote(-1)}
-            >
-              Dislike
-            </button> */}
           </div>
         </div>
         <CommentsList

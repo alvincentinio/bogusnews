@@ -3,7 +3,7 @@ import { getArticles } from "../api";
 import loader from "../images/loader.gif";
 import ArticleList from "./ArticleList";
 import NewArticleForm from "./NewArticleForm";
-import { navigate } from "@reach/router";
+import ShowError from "./ShowError";
 
 class Articles extends React.Component {
   state = {
@@ -11,7 +11,9 @@ class Articles extends React.Component {
     loading: true,
     p: 1,
     total_count: 0,
-    showArticleForm: false
+    showArticleForm: false,
+    errorMsg: null,
+    errorStatus: null
   };
   componentDidMount() {
     const { p } = this.state;
@@ -24,9 +26,10 @@ class Articles extends React.Component {
         });
       })
       .catch(({ response: { data, status } }) => {
-        navigate("/error", {
-          state: { from: "articles", msg: data.msg, status },
-          replace: true
+        this.setState({
+          errorMsg: data.msg,
+          errorStatus: status,
+          loading: false
         });
       });
   }
@@ -37,8 +40,18 @@ class Articles extends React.Component {
   }
 
   render() {
-    const { articles, loading, p, showArticleForm, total_count } = this.state;
+    const {
+      articles,
+      loading,
+      p,
+      showArticleForm,
+      total_count,
+      errorMsg,
+      errorStatus
+    } = this.state;
     const { state: locationState } = this.props.location;
+    if (errorMsg)
+      return <ShowError errorMsg={errorMsg} errorStatus={errorStatus} />;
     return loading ? (
       <img alt="" src={loader} width="30px" />
     ) : (
