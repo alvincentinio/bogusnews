@@ -8,9 +8,10 @@ class NewCommentForm extends Component {
   };
 
   render() {
-    return this.props.loggedinuser ? (
+    const { loggedinuser } = this.props;
+    return loggedinuser ? (
       <form id="addCommentForm" onSubmit={this.handleSubmit}>
-        <h5>Comment On this Article</h5>
+        <h5>Comment as {loggedinuser.username}</h5>
         <textarea
           id="bodyInput"
           type="text"

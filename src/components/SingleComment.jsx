@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { patchCommentVotes, deleteAComment, getUsers } from "../api";
-// import { formatDate } from "../utils/formatData";
 import { navigate } from "@reach/router";
 import loader from "../images/loader.gif";
 import Moment from "react-moment";
@@ -52,15 +51,14 @@ class SingleComment extends Component {
             />
           )}
         </div>
-        <div className="commentName">{comment.author}</div>
+        <div className="commentName">{comment.author} </div>
         <div className="commentTime">
-          {/* {formatDate(comment.created_at)} */}
           <Moment fromNow date={comment.created_at} />
         </div>
         <div className="commentDelete">
           {loggedinuser && loggedinuser.username === comment.author && (
             <button
-              className="redbutton"
+              className="dislikeButton"
               id={comment.comment_id}
               onClick={this.handleDeleteComment}
             >
@@ -69,12 +67,12 @@ class SingleComment extends Component {
           )}
         </div>
         <div className="commentVotes">
-          <h5> Votes: {comment.votes + commentVotes} </h5>
+          <span>{comment.votes + commentVotes} votes </span>
         </div>
         <div className="comment">{<h4>{comment.body}</h4>}</div>
         <div className="commentLike">
           <button
-            className="button"
+            className="likeButton"
             id={comment.comment_id}
             disabled={commentVotes === 1 || loggedinuser === comment.author}
             onClick={event => this.handleCommentVote(event, 1)}
@@ -84,7 +82,7 @@ class SingleComment extends Component {
         </div>
         <div className="commentDislike">
           <button
-            className="redbutton"
+            className="dislikeButton"
             id={comment.comment_id}
             disabled={commentVotes === -1 || loggedinuser === comment.author}
             onClick={event => this.handleCommentVote(event, -1)}
