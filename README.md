@@ -1,89 +1,92 @@
 # Bogus News
 
-A front-end app built with React.js which is served by my API, details of which can be found in my GitHub repository [here](https://github.com/alvincentinio/ncnews). Bogus News is a reddit-style website which allows users to post articles and comments in different topics and also vote these articles and comments up and down. Users can also create new topics and new users can be added to the database.
+A front-end app built with React.js which is served by my RESTful API, details of which can be found in my GitHub repository [here](https://github.com/alvincentinio/ncnews). Bogus News is a reddit-style website which allows users to post articles and comments in different topics and also vote these articles and comments up and down. Users can also create new topics and new users can be added to the database.
 
 The hosted ncnews API is hosted on Heroku [here](https://alcrewe-news.herokuapp.com/api)
 
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+This front-end app is hosted on netlify [here](https://bogusnews.netlify.com/)
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+Clone this repository:
 
 ```
-Give the example
+git clone https://github.com/alvincentinio/bogusnews.git
 ```
 
-And repeat
+Install the package dependencies:
 
 ```
-until finished
+npm install
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+Start the development server:
 
 ```
-Give an example
+npm start
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
+The app should now open in a new browser window. Alternatively please enter this in the browser
 
 ```
-Give an example
+http://localhost:3000/
+
 ```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-- [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-- [Maven](https://maven.apache.org/) - Dependency Management
-- [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+- [ReactJs](https://reactjs.org/) - A JavaScript library for building user interfaces
+- [Reach Router](https://reach.tech/router) - Enables routing and linking within a ReactJs app
+- [axios](https://github.com/axios/axios) - Make http requests from node.js
+- [react-chartjs-2](https://github.com/jerairrest/react-chartjs-2) - React wrapper for Chart.js 2
+- [React-moment](https://www.npmjs.com/package/react-moment) - Parse, validate, manipulate, and display dates and times in JavaScript
 
-## Contributing
+## Deployment on Netlify
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Redirects
+Add a file, \_redirects (no file extension) to your public directory. This file should contain the redirect rule: /\* /index.html 200. This is telling Netlify "if a request comes in to any endpoint on our base url - serve our index.html page and give a 200 status". We put this in the public directory to ensure that Webpack includes this file in the production build of the app.
 
-## Versioning
+Create a Build Version
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+```
+npm run build
+```
+
+This script uses Webpack and Babel to "bundle" your code into a few uglified files that can be read by most modern browsers. Take a look inside - but don't change anything.
+
+Create a Netlify Account
+Install Netfify's CLI
+
+```
+npm install netlify-cli -g
+```
+
+Deploy a Draft Version
+
+```
+netlify deploy
+```
+
+- Authorise Netlify with GitHub, following the prompts in the browser.
+- Select Create & configure a new site.
+- Provide your choice of site name.
+- Select your personal account.
+- Provide a deploy path. This needs to point to your build directory and should be ./build.
+
+Your draft version should now be deployed on a url, e.g. https://5c13ab16055b9be1725868e6--your-site-name.netlify.com. Test it out, make sure that everything is working as expected.
+
+Deploy a Production Version
+
+```
+netlify deploy --prod
+```
+
+Specify your build path again. This will deploy the site to your actual url: https://your-site-name.netlify.com.
 
 ## Authors
 
-- **Billie Thompson** - _Initial work_ - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+- **Alistair Crewe**
 
 ## Acknowledgments
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc
+- Thanks to all the staff at Northcoders.
