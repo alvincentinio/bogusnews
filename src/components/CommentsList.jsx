@@ -77,7 +77,6 @@ class CommentsList extends Component {
     this.setState({ commentBeenDeleted: true });
   };
   fetchComments = () => {
-    console.log("fetching next page of comments");
     const { p } = this.state;
     const { article_id } = this.props;
     getComments(article_id, p).then(comments => {

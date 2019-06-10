@@ -16,7 +16,7 @@ const Header = ({ loginUser, logoutUser, loggedinuser }) => {
       </div>
       <div id="title">
         <img id="bogus" alt="bogus" height="80px" src={bogus} />
-        <img id="news" alt="news" height="50px" src={news} />
+        <img id="news" alt="news" height="40px" src={news} />
         <SigninBox
           loginUser={loginUser}
           logoutUser={logoutUser}
