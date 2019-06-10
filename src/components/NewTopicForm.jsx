@@ -1,13 +1,20 @@
 import React, { Component } from "react";
 import { addATopic } from "../api";
-import { navigate } from "@reach/router";
+import ShowError from "./ShowError";
 
 class NewTopicForm extends Component {
   state = {
     slugInput: "",
-    descriptionInput: ""
+    descriptionInput: "",
+    errorMsg: null,
+    errorStatus: null
   };
   render() {
+    const { errorMsg, errorStatus } = this.state;
+    if (errorMsg)
+      return (
+        <ShowError errorMsg={errorMsg} errorStatus={errorStatus} from="topic" />
+      );
     return this.props.loggedinuser ? (
       <div className="newTopicForm">
         <form id="addTopicForm" onSubmit={this.handleSubmit}>
@@ -55,9 +62,9 @@ class NewTopicForm extends Component {
         this.setState({ slugInput: "", descriptionInput: "" });
       })
       .catch(({ response: { data, status } }) => {
-        navigate("/error", {
-          state: { from: "topics", msg: data.msg, status },
-          replace: true
+        this.setState({
+          errorMsg: data.msg,
+          errorStatus: status
         });
       });
   };

@@ -3,13 +3,15 @@ import { getTopics } from "../api";
 import loader from "../images/loader.gif";
 import TopicsList from "./TopicsList";
 import NewTopicForm from "./NewTopicForm";
-import { navigate } from "@reach/router";
+import ShowError from "./ShowError";
 
 class Topics extends React.Component {
   state = {
     topics: null,
     loading: true,
-    showTopicForm: false
+    showTopicForm: false,
+    errorMsg: null,
+    errorStatus: null
   };
   componentDidMount() {
     getTopics()
@@ -17,16 +19,19 @@ class Topics extends React.Component {
         this.setState({ topics, loading: false });
       })
       .catch(({ response: { data, status } }) => {
-        navigate("/error", {
-          state: { from: "topics", msg: data.msg, status },
-          replace: true
+        this.setState({
+          errorMsg: data.msg,
+          errorStatus: status,
+          loading: false
         });
       });
   }
 
   render() {
-    const { topics, loading } = this.state;
+    const { topics, loading, errorMsg, errorStatus } = this.state;
     const { loggedinuser } = this.props;
+    if (errorMsg)
+      return <ShowError errorMsg={errorMsg} errorStatus={errorStatus} />;
     return loading ? (
       <img alt="" src={loader} width="30px" />
     ) : (

@@ -1,15 +1,22 @@
 import React, { Component } from "react";
 import { addAUser } from "../api";
-import { navigate } from "@reach/router";
+import ShowError from "./ShowError";
 
 class NewUserForm extends Component {
   state = {
     username: "",
     avatar_url: "",
     name: "",
-    invalid_url: false
+    invalid_url: false,
+    errorMsg: null,
+    errorStatus: null
   };
   render() {
+    const { errorMsg, errorStatus } = this.state;
+    if (errorMsg)
+      return (
+        <ShowError errorMsg={errorMsg} errorStatus={errorStatus} from="user" />
+      );
     return (
       <div className="newUserForm">
         <form id="newUserForm" onSubmit={this.handleSubmit}>
@@ -43,7 +50,9 @@ class NewUserForm extends Component {
             Create User
           </button>
           {this.state.invalid_url && (
-            <h6>please enter a valid url or leave blank</h6>
+            <div className="avatarerror">
+              <h6>please enter a valid url or leave blank</h6>
+            </div>
           )}
           <button className="button redbutton" onClick={this.props.hideForm}>
             Close
@@ -70,9 +79,9 @@ class NewUserForm extends Component {
         });
       })
       .catch(({ response: { data, status } }) => {
-        navigate("/error", {
-          state: { from: "users", msg: data.msg, status },
-          replace: true
+        this.setState({
+          errorMsg: data.msg,
+          errorStatus: status
         });
       });
   };

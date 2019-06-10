@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { patchCommentVotes, deleteAComment, getUsers } from "../api";
-import { navigate } from "@reach/router";
 import loader from "../images/loader.gif";
 import Moment from "react-moment";
+import ShowError from "./ShowError";
 
 class SingleComment extends Component {
   state = {
@@ -11,7 +11,9 @@ class SingleComment extends Component {
     defaultAvatarUrl:
       "https://i155.photobucket.com/albums/s313/alvincentinio/Avatars/default-avatar.png",
     users: null,
-    loading: true
+    loading: true,
+    errorMsg: null,
+    errorStatus: null
   };
   componentDidMount() {
     getUsers()
@@ -19,17 +21,25 @@ class SingleComment extends Component {
         this.setState({ users, loading: false });
       })
       .catch(({ response: { data, status } }) => {
-        navigate("/error", {
-          state: { from: "comment", msg: data.msg, status },
-          replace: true
+        this.setState({
+          errorMsg: data.msg,
+          errorStatus: status,
+          loading: false
         });
       });
   }
 
   render() {
     const { comment, loggedinuser } = this.props;
-    const { commentVotes, defaultAvatarUrl, loading } = this.state;
-
+    const {
+      commentVotes,
+      defaultAvatarUrl,
+      loading,
+      errorMsg,
+      errorStatus
+    } = this.state;
+    if (errorMsg)
+      return <ShowError errorMsg={errorMsg} errorStatus={errorStatus} />;
     return this.state.commentDeleted ? (
       <h5>Your comment has been deleted</h5>
     ) : (
@@ -90,43 +100,6 @@ class SingleComment extends Component {
             Dislike
           </button>
         </div>
-        {/* <h3>
-          Posted By: {comment.author}@ {formatDate(comment.created_at)}
-        </h3>
-        <p>{comment.body}</p>
-        <button
-          className="button"
-          id={comment.comment_id}
-          disabled={commentVotes === 1 || loggedinuser === comment.author}
-          onClick={event => this.handleCommentVote(event, 1)}
-        >
-          <span aria-label="like " role="img">
-            👍
-          </span>
-          Like
-        </button>
-        <h5> Votes: {comment.votes + commentVotes} </h5>
-        <button
-          className="redbutton"
-          id={comment.comment_id}
-          disabled={commentVotes === -1 || loggedinuser === comment.author}
-          onClick={event => this.handleCommentVote(event, -1)}
-        >
-          <span aria-label="like " role="img">
-            👎
-          </span>
-          Dislike
-        </button>
-        <br />
-        {loggedinuser && loggedinuser.username === comment.author && (
-          <button
-            className="redbutton"
-            id={comment.comment_id}
-            onClick={this.handleDeleteComment}
-          >
-            Delete
-          </button>
-        )} */}
       </div>
     );
   }
@@ -154,9 +127,10 @@ class SingleComment extends Component {
         refreshCommentCount();
       })
       .catch(({ response: { data, status } }) => {
-        navigate("/error", {
-          state: { from: "comments", msg: data.msg, status },
-          replace: true
+        this.setState({
+          errorMsg: data.msg,
+          errorStatus: status,
+          loading: false
         });
       });
   };

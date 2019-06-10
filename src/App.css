@@ -477,3 +477,6 @@ textarea {
   height: 80px;
   border-radius: 6px;
 }
+.avatarerror {
+  color: white;
+}

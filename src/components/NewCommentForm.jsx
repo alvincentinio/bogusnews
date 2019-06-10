@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import { addAComment } from "../api";
-import { navigate } from "@reach/router";
+import ShowError from "./ShowError";
 
 class NewCommentForm extends Component {
   state = {
-    bodyInput: ""
+    bodyInput: "",
+    errorMsg: null,
+    errorStatus: null
   };
 
   render() {
     const { loggedinuser } = this.props;
+    const { errorMsg, errorStatus } = this.state;
+    if (errorMsg)
+      return <ShowError errorMsg={errorMsg} errorStatus={errorStatus} />;
     return loggedinuser ? (
       <form id="addCommentForm" onSubmit={this.handleSubmit}>
         <h5>Comment as {loggedinuser.username}</h5>
@@ -49,9 +54,9 @@ class NewCommentForm extends Component {
         refreshCommentCount();
       })
       .catch(({ response: { data, status } }) => {
-        navigate("/error", {
-          state: { from: "comment form", msg: data.msg, status },
-          replace: true
+        this.setState({
+          errorMsg: data.msg,
+          errorStatus: status
         });
       });
   };

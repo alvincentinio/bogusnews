@@ -3,11 +3,14 @@ import { Doughnut } from "react-chartjs-2";
 import { getArticles } from "../api";
 import { navigate } from "@reach/router";
 import loader from "../images/loader.gif";
+import ShowError from "./ShowError";
 
 class Chart extends Component {
   state = {
     articles: null,
-    loading: true
+    loading: true,
+    errorMsg: null,
+    errorStatus: null
   };
 
   componentDidMount() {
@@ -16,9 +19,10 @@ class Chart extends Component {
         this.setState({ articles: data.articles, loading: false });
       })
       .catch(({ response: { data, status } }) => {
-        navigate("/error", {
-          state: { from: "homepage", msg: data.msg, status },
-          replace: true
+        this.setState({
+          errorMsg: data.msg,
+          errorStatus: status,
+          loading: false
         });
       });
   }
@@ -31,7 +35,9 @@ class Chart extends Component {
         event.target.style.cursor = "pointer";
       }
     };
-    const { loading } = this.state;
+    const { loading, errorMsg, errorStatus } = this.state;
+    if (errorMsg)
+      return <ShowError errorMsg={errorMsg} errorStatus={errorStatus} />;
     return loading ? (
       <img alt="" src={loader} width="30px" />
     ) : (

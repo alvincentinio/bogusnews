@@ -3,13 +3,15 @@ import { getUsers } from "../api";
 import loader from "../images/loader.gif";
 import NewUserForm from "./NewUserForm";
 import UsersList from "./UsersList";
-import { navigate } from "@reach/router";
+import ShowError from "./ShowError";
 
 class Users extends Component {
   state = {
     users: null,
     loading: true,
-    showUserForm: false
+    showUserForm: false,
+    errorMsg: null,
+    errorStatus: null
   };
 
   componentDidMount() {
@@ -18,15 +20,18 @@ class Users extends Component {
         this.setState({ users, loading: false });
       })
       .catch(({ response: { data, status } }) => {
-        navigate("/error", {
-          state: { from: "users", msg: data.msg, status },
-          replace: true
+        this.setState({
+          errorMsg: data.msg,
+          errorStatus: status,
+          loading: false
         });
       });
   }
 
   render() {
-    const { users, loading } = this.state;
+    const { users, loading, errorMsg, errorStatus } = this.state;
+    if (errorMsg)
+      return <ShowError errorMsg={errorMsg} errorStatus={errorStatus} />;
     return loading ? (
       <img alt="" src={loader} width="30px" />
     ) : (

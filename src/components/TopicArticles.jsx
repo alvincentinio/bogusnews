@@ -2,14 +2,16 @@ import React, { Component } from "react";
 import { getArticles } from "../api";
 import loader from "../images/loader.gif";
 import ArticleList from "./ArticleList";
-import { navigate } from "@reach/router";
+import ShowError from "./ShowError";
 
 class TopicArticles extends Component {
   state = {
     articles: null,
     loading: true,
     total_count: 0,
-    p: 1
+    p: 1,
+    errorMsg: null,
+    errorStatus: null
   };
   componentDidMount() {
     const { topic } = this.props;
@@ -22,9 +24,10 @@ class TopicArticles extends Component {
         });
       })
       .catch(({ response: { data, status } }) => {
-        navigate("/error", {
-          state: { from: "topic articles", msg: data.msg, status },
-          replace: true
+        this.setState({
+          errorMsg: data.msg,
+          errorStatus: status,
+          loading: false
         });
       });
   }
@@ -34,8 +37,17 @@ class TopicArticles extends Component {
     }
   }
   render() {
-    const { articles, loading, p, total_count } = this.state;
+    const {
+      articles,
+      loading,
+      p,
+      total_count,
+      errorMsg,
+      errorStatus
+    } = this.state;
     const { topic, loggedinuser } = this.props;
+    if (errorMsg)
+      return <ShowError errorMsg={errorMsg} errorStatus={errorStatus} />;
     return loading ? (
       <img alt="" src={loader} width="30px" />
     ) : (
@@ -88,9 +100,10 @@ class TopicArticles extends Component {
         });
       })
       .catch(({ response: { data, status } }) => {
-        navigate("/error", {
-          state: { from: "topoc articles", msg: data.msg, status },
-          replace: true
+        this.setState({
+          errorMsg: data.msg,
+          errorStatus: status,
+          loading: false
         });
       });
   };
@@ -110,9 +123,10 @@ class TopicArticles extends Component {
         });
       })
       .catch(({ response: { data, status } }) => {
-        navigate("/error", {
-          state: { from: "topic articles", msg: data.msg, status },
-          replace: true
+        this.setState({
+          errorMsg: data.msg,
+          errorStatus: status,
+          loading: false
         });
       });
   };

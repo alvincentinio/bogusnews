@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { submitArticle, getTopics } from "../api";
 import { navigate } from "@reach/router";
 import loader from "../images/loader.gif";
+import ShowError from "./ShowError";
 
 class NewArticleForm extends Component {
   state = {
@@ -9,7 +10,9 @@ class NewArticleForm extends Component {
     body: "",
     topic: "",
     availableTopics: null,
-    loading: true
+    loading: true,
+    errorMsg: null,
+    errorStatus: null
   };
   componentDidMount() {
     getTopics()
@@ -17,14 +20,18 @@ class NewArticleForm extends Component {
         this.setState({ availableTopics: topics, loading: false });
       })
       .catch(({ response: { data, status } }) => {
-        navigate("/error", {
-          state: { from: "topics", msg: data.msg, status },
-          replace: true
+        this.setState({
+          errorMsg: data.msg,
+          errorStatus: status,
+          loading: false
         });
       });
   }
 
   render() {
+    const { errorMsg, errorStatus } = this.state;
+    if (errorMsg)
+      return <ShowError errorMsg={errorMsg} errorStatus={errorStatus} />;
     return this.props.loggedinuser ? (
       <div id="centred">
         <form id="newArticleForm" onSubmit={this.handleSubmit}>
