@@ -15,20 +15,30 @@ class ArticleSortBy extends Component {
             onChange={this.handleChange}
             id="sort_by"
           >
-            <option value="created_at">Date Created</option>
-            <option value="comment_count">No. Of Comments</option>
-            <option value="votes">Votes</option>
+            <option value="created_at" id="created">
+              Date Created
+            </option>
+            <option value="comment_count" id="count">
+              No. Of Comments
+            </option>
+            <option value="votes" id="votes">
+              Votes
+            </option>
           </select>
           <select
             className="select-box"
             onChange={this.handleChange}
             id="order"
           >
-            <option value="desc" defaultValue>
+            <option value="desc" id="default" defaultValue>
               Sort Order
             </option>
-            <option value="desc">Descending</option>
-            <option value="asc">Ascending</option>
+            <option value="desc" id="desc">
+              Descending
+            </option>
+            <option value="asc" id="asc">
+              Ascending
+            </option>
           </select>
           <button className="button">Go</button>
         </form>
