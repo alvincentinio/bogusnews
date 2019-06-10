@@ -67,17 +67,17 @@ class Article extends Component {
               Posted by {article.author}{" "}
               <Moment fromNow date={article.created_at} />
             </h5>
-          <div className="articleBody">
-            <h4>{article.body}</h4>
+            <div className="articleBody">
+              <h4>{article.body}</h4>
               {confirmButtonsShowing && (
                 <div>
                   <h5>Delete Your Article & All It's Comments?</h5>
                   <button className="button" onClick={this.deleteArticle}>
                     Yes
-                </button>
+                  </button>
                   <button className="redbutton" onClick={this.toggleConfirm}>
                     No
-                </button>
+                  </button>
                 </div>
               )}
             </div>
