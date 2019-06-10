@@ -51,7 +51,7 @@ class Chart extends Component {
           }}
           data={this.populateData()}
           options={{
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             responsive: true,
             cutoutPercentage: 40,
             legend: {

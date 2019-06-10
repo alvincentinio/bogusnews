@@ -11,7 +11,7 @@ const Header = ({ loginUser, logoutUser, loggedinuser }) => {
     <div id="header">
       <div id="leftlogo">
         <Link to="/">
-          <img id="leftlogo" alt="logo" width="120px" src={bogusnews} />
+          <img id="logo" alt="logo" width="120px" src={bogusnews} />
         </Link>
       </div>
       <div id="title">
@@ -25,7 +25,7 @@ const Header = ({ loginUser, logoutUser, loggedinuser }) => {
       </div>
       <div id="rightlogo">
         <Link to="/">
-          <img id="rightlogo" alt="logo" width="120px" src={bogusnews} />
+          <img id="logo" alt="logo" width="120px" src={bogusnews} />
         </Link>
       </div>
     </div>
