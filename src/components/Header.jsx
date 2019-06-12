@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "@reach/router";
-// import newslogo from "../images/newslogo.png";
 import SigninBox from "./SigninBox";
 import bogusnews from "../images/bogusnews.png";
 import bogus from "../images/bogus.png";

@@ -8,7 +8,7 @@ import greenarrow from "../images/greenarrow48x48.png";
 import Moment from "react-moment";
 import ShowError from "./ShowError";
 
-class Article extends Component {
+class SingleArticle extends Component {
   state = {
     article: null,
     articleVotes: 0,
@@ -157,4 +157,4 @@ class Article extends Component {
     this.setState({ commentsUpdated: true });
   };
 }
-export default Article;
+export default SingleArticle;
