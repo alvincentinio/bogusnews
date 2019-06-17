@@ -126,7 +126,5 @@ export const deleteAComment = commment_id => {
 };
 
 export const deleteAnArticle = article_id => {
-  return axios.delete(`${url}/articles/${article_id}`).then(res => {
-    console.log(res);
-  });
+  return axios.delete(`${url}/articles/${article_id}`).then();
 };
